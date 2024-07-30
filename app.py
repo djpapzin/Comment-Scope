@@ -251,22 +251,6 @@ def calculate_engagement(df):
     df["EngagementScore"] = df["Likes"] + df["Reply Count"] * 2 + df["Sentiment"].apply(lambda x: 1 if x == 'Positive' else (-1 if x == 'Negative' else 0))
     return df
 
-# Function to monitor API quota
-def api_quota_monitor(gemini_api_key):
-    genai.configure(api_key= gemini_api_key)  # Configure for Gemini
-    try:
-        # Make a simple request to Gemini to get quota info
-        response = genai.GenerativeModel(
-            model="gemini-1.5-flash",  # Use Gemini Pro model
-            prompt="Hello, world!",
-        )
-        return response.get('quota_remaining', None)
-    except HttpError as e:
-        print(f"An HTTP error occurred: {e.resp.status} {e.content}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    return None
-
 # Function to summarize comments
 def summarize_comments(model, comments):
     """Summarizes all comments in the list.
@@ -448,13 +432,3 @@ if trending_videos:
                 # Comment Summary
                 st.subheader("Comment Summary")
                 st.write(summarize_comments(model, df["Comment"].tolist()))
-
-
-# API Quota Monitor
-st.sidebar.subheader("API Quota Monitor")
-
-quota_remaining = api_quota_monitor(gemini_api_key)
-if quota_remaining is not None:
-    st.sidebar.write(f"API Quota Remaining: {quota_remaining}")
-else:
-    st.sidebar.write("Unable to retrieve API quota information.") 
