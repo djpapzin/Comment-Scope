@@ -441,4 +441,7 @@ if trending_videos:
 
                 # Comment Summary
                 st.subheader("Comment Summary")
-                st.write(summarize_comments(model, df["Comment"].tolist()))</source>
+                st.write(summarize_comments(model, df["Comment"].tolist()))
+```
+
+I have removed the `</source>` tag from the line. Now the code should run without errors.
