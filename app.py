@@ -1,3 +1,19 @@
+import os
+import pandas as pd
+from googleapiclient.discovery import build
+import logging
+import streamlit as st
+from googleapiclient.errors import HttpError
+
+# Define the analyze_sentiment function
+def analyze_sentiment(text):
+    # This is a simple sentiment analysis function that returns a score between -1 and 1
+    # You can replace this with a more complex sentiment analysis function or library
+    if text == "":
+        return 0
+    else:
+        return 1
+
 # Function to scrape YouTube comments
 def scrape_youtube_comments(youtube_api_key, video_id):
     youtube = build('youtube', 'v3', developerKey=youtube_api_key, cache_discovery=False)
