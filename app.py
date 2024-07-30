@@ -12,8 +12,8 @@ from wordcloud import WordCloud
 import gensim
 import plotly.express as px
 import streamlit as st
-# from st_aggrid import AgGrid, GridUpdateMode, DataReturnMode
-# from st_aggrid.grid_options_builder import GridOptionsBuilder
+from st_aggrid import AgGrid, GridUpdateMode, DataReturnMode
+from st_aggrid.grid_options_builder import GridOptionsBuilder
 from gensim import corpora
 import google.generativeai as genai
 
@@ -187,12 +187,12 @@ def analyze_sentiment_over_time(df):
     st.plotly_chart(fig)
 
 # Function to display an interactive data table
-# def display_interactive_table(df):
-#     gb = GridOptionsBuilder.from_dataframe(df)
-#     gb.configure_pagination(paginationAutoPageSize=True)
-#     gb.configure_side_bar()
-#     gridOptions = gb.build()
-#     AgGrid(df, gridOptions=gridOptions, enable_enterprise_modules=True, update_mode=GridUpdateMode.SELECTION_CHANGED, data_return_mode=DataReturnMode.FILTERED_AND_SORTED)
+def display_interactive_table(df):
+    gb = GridOptionsBuilder.from_dataframe(df)
+    gb.configure_pagination(paginationAutoPageSize=True)
+    gb.configure_side_bar()
+    gridOptions = gb.build()
+    AgGrid(df, gridOptions=gridOptions, enable_enterprise_modules=True, update_mode=GridUpdateMode.SELECTION_CHANGED, data_return_mode=DataReturnMode.FILTERED_AND_SORTED)
 
 # Function to extract topics from comments
 def extract_topics(df, num_topics=5, num_words=10):
@@ -267,15 +267,7 @@ def summarize_comments(model, comments):
     
     # Combine all comments into a single string
     all_comments = "\n\n".join(comments)
-    prompt = f"""
-    Summarize the following YouTube comments in a comprehensive and objective manner. 
-    Provide a clear overview of the main topics discussed, key arguments, and any recurring themes. 
-    Additionally, analyze the overall sentiment expressed in the comments and provide a concise summary of the sentiment. 
-    Avoid expressing any personal opinions or biases.
-
-    Comments:
-    {all_comments}
-    """
+    prompt = f"Summarize the following YouTube comments:\n\n{all_comments}"
     try:
         response = model.generate_text(
             model="gemini-1.5-flash",  # Use Gemini Pro model
@@ -352,8 +344,7 @@ if st.button("Scrape Comments", key="scrape_comments_button"):  # Unique key
 
                 # Interactive Data Table
                 st.subheader("Interactive Comment Table")
-                st.dataframe(df)
-                # display_interactive_table(df)
+                display_interactive_table(df)
 
                 # Topic Extraction
                 st.subheader("Topic Extraction")
@@ -427,8 +418,7 @@ if trending_videos:
 
                 # Interactive Data Table
                 st.subheader("Interactive Comment Table")
-                st.dataframe(df)
-                # display_interactive_table(df)
+                display_interactive_table(df)
 
                 # Topic Extraction
                 st.subheader("Topic Extraction")
@@ -442,6 +432,3 @@ if trending_videos:
                 # Comment Summary
                 st.subheader("Comment Summary")
                 st.write(summarize_comments(model, df["Comment"].tolist()))
-```
-
-I have removed the `</source>` tag from the line. Now the code should run without errors.
