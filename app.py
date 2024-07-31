@@ -377,7 +377,7 @@ if trending_videos:
 
                 # Comment Summary
                 st.subheader("Comment Summary")
-                prompt = f"Summarize the following YouTube comments in a neutral and unbiased manner, providing an overview of the video's content and the discussion in the comments section. Please include the main topics, key points, and any notable trends or insights, without taking a stance or making assumptions. The comments are as follows:\n\n{df['Comment'].tolist()}"
+                prompt = f"Summarize the following YouTube comments in a neutral and unbiased manner, providing an overview of the video's content and the discussion in the comments section. Please include the main topics, key points, and any notable trends or insights, without taking a stance or making assumptions. The comments are as follows:\n\n{df['Comment'].tolist()}\n\nPlease format the summary in bullet points."
                 try:
                     response = chat_session.send_message(prompt)
                     st.write(response.text.strip())
