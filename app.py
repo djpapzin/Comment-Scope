@@ -225,9 +225,7 @@ def summarize_comments(model, comments):
     all_comments = "\n\n".join(comments)
     prompt = f"Summarize the following YouTube comments:\n\n{all_comments}"
     try:
-        response = chat_session.generate_text(
-            prompt=prompt,
-        )
+        response = chat_session.send_message(prompt)
         return response.text.strip()
     except Exception as e:
         logging.error(f"Error summarizing comments: {e}")
