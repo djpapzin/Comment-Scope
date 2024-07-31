@@ -313,6 +313,7 @@ if trending_videos:
     video_selection = st.selectbox("Select a trending video", [f"{video['title']} (by {video['channelTitle']})" for video in trending_videos])
     selected_video = next(video for video in trending_videos if f"{video['title']} (by {video['channelTitle']})" == video_selection)
     display_video_metadata(selected_video)
+    st.image(f"https://img.youtube.com/vi/{selected_video['videoId']}/hqdefault.jpg")
     
     if st.button("Scrape Comments for Trending Video", key="scrape_trending_comments_button"):
         video_id = selected_video['videoId']
