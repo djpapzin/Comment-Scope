@@ -255,9 +255,15 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
             else:
                 st.success(f"Scraping complete! Total Comments: {total_comments}")
                 st.session_state['df'] = df.copy()
-                st.write(df)
-                csv = df.to_csv(index=False).encode('utf-8')
-                st.download_button(label="Download CSV", data=csv, file_name="youtube_comments.csv", mime="text/csv")
+                st.session_state['filtered_df'] = df.copy()
+                st.image(f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg")
+
+                # Comment Summary
+                with st.expander("Comment Summary", expanded=False):
+                    try:
+                        st.write(summarize_comments(df["Comment"].tolist()))
+                    except Exception as e:
+                        st.error(f"Error summarizing comments: {e}")
 
                 # Sentiment Analysis Visualization
                 with st.expander("Sentiment Analysis", expanded=False):
@@ -300,18 +306,13 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
                 # Interactive Data Table
                 with st.expander("Interactive Comment Table", expanded=False):
                     display_interactive_table(df)
+                    json = st.session_state['filtered_df'].to_json(orient='records')
+                    st.download_button(label="Download JSON", data=json, file_name="youtube_comments.json", mime="application/json")
 
                 # User Engagement Score
                 with st.expander("User Engagement Score", expanded=False):
                     df = calculate_engagement(df)
                     st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
-
-                # Comment Summary
-                with st.expander("Comment Summary", expanded=False):
-                    try:
-                        st.write(summarize_comments(df["Comment"].tolist()))
-                    except Exception as e:
-                        st.error(f"Error summarizing comments: {e}")
 
 # Display trending videos
 st.header("Trending Videos")
