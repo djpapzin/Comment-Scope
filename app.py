@@ -278,19 +278,20 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
                     analyze_comment_length(df)
 
                 # Top Commenters
-                st.subheader("Top Commenters")
-                top_commenters_by_comments = st.checkbox("Top Commenters by Number of Comments")
-                top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
-                top_commenters_by_likes_sorted = st.checkbox("Comments Sorted by Likes")
-                top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
+                with st.expander("Top Commenters", expanded=False):
+                    st.subheader("Top Commenters")
+                    top_commenters_by_comments = st.checkbox("Top Commenters by Number of Comments")
+                    top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
+                    top_commenters_by_likes_sorted = st.checkbox("Comments Sorted by Likes")
+                    top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
 
-                if top_commenters_by_comments:
-                    get_top_commenters(df, by="comments", top_n=top_n)
+                    if top_commenters_by_comments:
+                        get_top_commenters(df, by="comments", top_n=top_n)
 
-                if top_commenters_by_likes:
-                    get_top_commenters(df, by="likes", top_n=top_n)
+                    if top_commenters_by_likes:
+                        get_top_commenters(df, by="likes", top_n=top_n)
 
-                st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
+                    st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
 
                 # Sentiment Analysis Over Time
                 with st.expander("Sentiment Analysis Over Time", expanded=False):
@@ -359,11 +360,11 @@ if trending_videos:
                     top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
                     top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
 
-                if top_commenters_by_comments:
-                    get_top_commenters(df, by="comments", top_n=top_n)
+                    if top_commenters_by_comments:
+                        get_top_commenters(df, by="comments", top_n=top_n)
 
-                if top_commenters_by_likes:
-                    get_top_commenters(df, by="likes", top_n=top_n)
+                    if top_commenters_by_likes:
+                        get_top_commenters(df, by="likes", top_n=top_n)
 
                 # Sentiment Analysis Over Time
                 st.subheader("Sentiment Analysis Over Time")
