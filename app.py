@@ -260,7 +260,7 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
                 st.download_button(label="Download CSV", data=csv, file_name="youtube_comments.csv", mime="text/csv")
 
                 # Sentiment Analysis Visualization
-                with st.expander("Sentiment Analysis"):
+                with st.expander("Sentiment Analysis", expanded=False):
                     sentiment_counts = df['Sentiment'].value_counts()
                     fig, ax = plt.subplots()
                     ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=140)
@@ -269,12 +269,12 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
                     export_visualization(fig, "sentiment_analysis.png")
 
                 # Generate Word Cloud
-                with st.expander("Word Cloud"):
+                with st.expander("Word Cloud", expanded=False):
                     all_comments = ' '.join(df['Comment'])
                     generate_word_cloud(all_comments)
 
                 # Comment Length Analysis
-                with st.expander("Comment Length Analysis"):
+                with st.expander("Comment Length Analysis", expanded=False):
                     analyze_comment_length(df)
 
                 # Top Commenters
@@ -293,20 +293,20 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
                 st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
 
                 # Sentiment Analysis Over Time
-                with st.expander("Sentiment Analysis Over Time"):
+                with st.expander("Sentiment Analysis Over Time", expanded=False):
                     analyze_sentiment_over_time(df)
 
                 # Interactive Data Table
-                with st.expander("Interactive Comment Table"):
+                with st.expander("Interactive Comment Table", expanded=False):
                     display_interactive_table(df)
 
                 # User Engagement Score
-                with st.expander("User Engagement Score"):
+                with st.expander("User Engagement Score", expanded=False):
                     df = calculate_engagement(df)
                     st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
 
                 # Comment Summary
-                with st.expander("Comment Summary"):
+                with st.expander("Comment Summary", expanded=False):
                     try:
                         st.write(summarize_comments(df["Comment"].tolist()))
                     except Exception as e:
@@ -354,7 +354,7 @@ if trending_videos:
                 analyze_comment_length(df)
 
                 # Top Commenters
-                with st.expander("Top Commenters"):
+                with st.expander("Top Commenters", expanded=False):
                     top_commenters_by_comments = st.checkbox("Top Commenters by Number of Comments")
                     top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
                     top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
