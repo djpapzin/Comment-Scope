@@ -374,4 +374,4 @@ if trending_videos:
 
                 # Comment Summary
                 st.subheader("Comment Summary")
-                st.write(summarize_comments(model, df["Comment"].tolist()))
+                st.write(summarize_comments(df["Comment"].tolist()))
