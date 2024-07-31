@@ -218,7 +218,7 @@ def calculate_engagement(df):
     return df
 
 # Function to summarize comments
-def summarize_comments(model, comments):
+def summarize_comments(comments):
     if not comments:
         return "No comments to summarize."
     
