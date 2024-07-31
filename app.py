@@ -258,8 +258,8 @@ if st.button("Scrutanize", key="scrape_comments_button"): # Change here
                 st.session_state['filtered_df'] = df.copy()
                 st.image(f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg")
 
-                # Comment Summary
-                with st.expander("Comment Summary", expanded=True): # Change here
+                # Comments Summary
+                with st.expander("Comments Summary", expanded=True): # Change here
                     try:
                         st.write(summarize_comments(df["Comment"].tolist()))
                     except Exception as e:
@@ -380,8 +380,8 @@ if trending_videos:
                 df = calculate_engagement(df)
                 st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
 
-                # Comment Summary
-                st.subheader("Comment Summary")
+                # Comments Summary
+                st.subheader("Comments Summary")
                 prompt = f"Summarize the following YouTube comments in a neutral and unbiased manner, providing an overview of the video's content and the discussion in the comments section. Please include the main topics, key points, and any notable trends or insights, without taking a stance or making assumptions. The comments are as follows:\n\n{df['Comment'].tolist()}\n\nPlease format the summary in bullet points."
                 try:
                     response = chat_session.send_message(prompt)
