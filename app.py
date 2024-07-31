@@ -232,7 +232,7 @@ def summarize_comments(comments):
         return "Error summarizing comments."
 
 # Streamlit App
-st.title("YouTube Comment Scraper and Analyzer")
+st.title("Youtube Comment AI Scrutinizer")
 
 # Initialize session state
 if 'df' not in st.session_state:
