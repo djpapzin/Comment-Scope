@@ -253,7 +253,7 @@ if st.button("Scrutanize", key="scrape_comments_button"): # Change here
             if df is None or total_comments is None:
                 st.error("Error scraping comments. Please try again.")
             else:
-                st.success(f"Scraping complete! Total Comments: {total_comments}")
+                st.success(f"Scrutinizing Complete! Total Comments: {total_comments}") # Change here
                 st.session_state['df'] = df.copy()
                 st.session_state['filtered_df'] = df.copy()
                 st.image(f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg")
