@@ -304,7 +304,7 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
 
                 # Comment Summary
                 st.subheader("Comment Summary")
-                st.write(summarize_comments(model, df["Comment"].tolist()))
+                st.write(summarize_comments(df["Comment"].tolist()))
 
 # Display trending videos
 st.header("Trending Videos")
