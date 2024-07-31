@@ -225,8 +225,7 @@ def summarize_comments(model, comments):
     all_comments = "\n\n".join(comments)
     prompt = f"Summarize the following YouTube comments:\n\n{all_comments}"
     try:
-        response = model.generate_text(
-            model="gemini-1.5-flash",
+        response = chat_session.generate_text(
             prompt=prompt,
         )
         return response.text.strip()
