@@ -388,4 +388,3 @@ if trending_videos:
                     st.write(response.text.strip())
                 except Exception as e:
                     st.error(f"Error summarizing comments: {e}")
-```</source>
