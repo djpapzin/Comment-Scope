@@ -243,7 +243,7 @@ if 'filtered_df' not in st.session_state:
 video_url = st.text_input("Enter YouTube video URL")
 
 # Scrape Comments Button
-if st.button("Scrape Comments", key="scrape_comments_button"):
+if st.button("Scrutanize", key="scrape_comments_button"): # Change here
     video_id = extract_video_id(video_url)
     if video_id:
         with st.spinner("Scraping comments..."):
