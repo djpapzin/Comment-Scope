@@ -259,7 +259,7 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
                 st.image(f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg")
 
                 # Comment Summary
-                with st.expander("Comment Summary", expanded=False):
+                with st.expander("Comment Summary", expanded=True): # Change here
                     try:
                         st.write(summarize_comments(df["Comment"].tolist()))
                     except Exception as e:
