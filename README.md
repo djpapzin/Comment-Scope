@@ -2,7 +2,22 @@
 
 This Streamlit app leverages the power of Google's Gemini AI Flash model to analyze YouTube comments and provide insightful data visualizations.
 
-![Demo 1](demo_1.jpeg) +![Demo 2](demo_2.jpeg)
+## Demo
+
+<table>
+  <tr>
+    <td><img src="demo/main_menu.jpeg" alt="Main Demo"></td>
+    <td><img src="demo/collapsed_menu.jpeg" alt="Collapsed Menu Demo"></td>
+    <td><img src="demo/comments_summary.jpeg" alt="Comments Summary Demo"></td>
+    <td><img src="demo/sentiment_analysis.jpeg" alt="Sentiment Analysis Demo"></td>
+    <td><img src="demo/word_cloud.jpeg" alt="Word Cloud Demo"></td>
+    <td><img src="demo/top_commenters.jpeg" alt="Top Commenters Demo"></td>
+   <td><img src="demo/comment_length_analysis.jpeg" alt="Comment Length Demo"></td>
+    <td><img src="demo/user_engagement_score.jpeg" alt="User Engagement Demo"></td>
+    <td><img src="demo/sentiment_overtime.jpeg" alt="Sentiment Overtime Demo"></td>
+
+  </tr>
+</table>
 
 ## Features
 
