@@ -304,7 +304,10 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
 
                 # Comment Summary
                 st.subheader("Comment Summary")
-                st.write(summarize_comments(df["Comment"].tolist()))
+                try:
+                    st.write(summarize_comments(df["Comment"].tolist()))
+                except Exception as e:
+                    st.error(f"Error summarizing comments: {e}")
 
 # Display trending videos
 st.header("Trending Videos")
