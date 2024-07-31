@@ -354,10 +354,10 @@ if trending_videos:
                 analyze_comment_length(df)
 
                 # Top Commenters
-                st.subheader("Top Commenters")
-                top_commenters_by_comments = st.checkbox("Top Commenters by Number of Comments")
-                top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
-                top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
+                with st.expander("Top Commenters"):
+                    top_commenters_by_comments = st.checkbox("Top Commenters by Number of Comments")
+                    top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
+                    top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
 
                 if top_commenters_by_comments:
                     get_top_commenters(df, by="comments", top_n=top_n)
