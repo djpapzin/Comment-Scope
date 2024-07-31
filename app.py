@@ -260,22 +260,22 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
                 st.download_button(label="Download CSV", data=csv, file_name="youtube_comments.csv", mime="text/csv")
 
                 # Sentiment Analysis Visualization
-                st.subheader("Sentiment Analysis")
-                sentiment_counts = df['Sentiment'].value_counts()
-                fig, ax = plt.subplots()
-                ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=140)
-                ax.axis('equal')
-                st.pyplot(fig)
-                export_visualization(fig, "sentiment_analysis.png")
+                with st.expander("Sentiment Analysis"):
+                    sentiment_counts = df['Sentiment'].value_counts()
+                    fig, ax = plt.subplots()
+                    ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=140)
+                    ax.axis('equal')
+                    st.pyplot(fig)
+                    export_visualization(fig, "sentiment_analysis.png")
 
                 # Generate Word Cloud
-                st.subheader("Word Cloud")
-                all_comments = ' '.join(df['Comment'])
-                generate_word_cloud(all_comments)
+                with st.expander("Word Cloud"):
+                    all_comments = ' '.join(df['Comment'])
+                    generate_word_cloud(all_comments)
 
                 # Comment Length Analysis
-                st.subheader("Comment Length Analysis")
-                analyze_comment_length(df)
+                with st.expander("Comment Length Analysis"):
+                    analyze_comment_length(df)
 
                 # Top Commenters
                 st.subheader("Top Commenters")
@@ -293,24 +293,24 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
                 st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
 
                 # Sentiment Analysis Over Time
-                st.subheader("Sentiment Analysis Over Time")
-                analyze_sentiment_over_time(df)
+                with st.expander("Sentiment Analysis Over Time"):
+                    analyze_sentiment_over_time(df)
 
                 # Interactive Data Table
-                st.subheader("Interactive Comment Table")
-                display_interactive_table(df)
+                with st.expander("Interactive Comment Table"):
+                    display_interactive_table(df)
 
                 # User Engagement Score
-                st.subheader("User Engagement Score")
-                df = calculate_engagement(df)
-                st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
+                with st.expander("User Engagement Score"):
+                    df = calculate_engagement(df)
+                    st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
 
                 # Comment Summary
-                st.subheader("Comment Summary")
-                try:
-                    st.write(summarize_comments(df["Comment"].tolist()))
-                except Exception as e:
-                    st.error(f"Error summarizing comments: {e}")
+                with st.expander("Comment Summary"):
+                    try:
+                        st.write(summarize_comments(df["Comment"].tolist()))
+                    except Exception as e:
+                        st.error(f"Error summarizing comments: {e}")
 
 # Display trending videos
 st.header("Trending Videos")
