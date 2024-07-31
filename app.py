@@ -377,4 +377,9 @@ if trending_videos:
 
                 # Comment Summary
                 st.subheader("Comment Summary")
-                st.write(summarize_comments(df["Comment"].tolist()))
+                prompt = f"Summarize the following YouTube comments in bullet points, including the main topics, key points, and any notable trends or insights:\n\n{df['Comment'].tolist()}"
+                try:
+                    response = chat_session.send_message(prompt)
+                    st.write(response.text.strip())
+                except Exception as e:
+                    st.error(f"Error summarizing comments: {e}")
