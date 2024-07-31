@@ -290,8 +290,7 @@ if st.button("Scrape Comments", key="scrape_comments_button"):
                 if top_commenters_by_likes:
                     get_top_commenters(df, by="likes", top_n=top_n)
 
-                if top_commenters_by_likes_sorted:
-                    st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
+                st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
 
                 # Sentiment Analysis Over Time
                 st.subheader("Sentiment Analysis Over Time")
