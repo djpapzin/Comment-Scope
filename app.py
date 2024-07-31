@@ -246,7 +246,7 @@ video_url = st.text_input("Enter YouTube video URL")
 if st.button("Scrutanize", key="scrape_comments_button"): # Change here
     video_id = extract_video_id(video_url)
     if video_id:
-        with st.spinner("Scraping comments..."):
+        with st.spinner("Scrutinizing comments..."): # Change here
             progress_bar = st.progress(0)
             df, total_comments = scrape_youtube_comments(youtube_api_key, video_id)
             progress_bar.progress(1)
