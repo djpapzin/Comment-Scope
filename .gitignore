@@ -3,3 +3,4 @@ config.data
 .streamlit/secrets.toml
 .aider*
 .venv/
+sentiment_analysis.png
