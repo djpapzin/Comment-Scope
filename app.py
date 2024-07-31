@@ -353,38 +353,4 @@ if trending_videos:
 
                 # Comment Length Analysis
                 st.subheader("Comment Length Analysis")
-                analyze_comment_length(df)
-
-                # Top Commenters
-                with st.expander("Top Commenters", expanded=False):
-                    top_commenters_by_comments = st.checkbox("Top Commenters by Number of Comments")
-                    top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
-                    top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
-
-                    if top_commenters_by_comments:
-                        get_top_commenters(df, by="comments", top_n=top_n)
-
-                    if top_commenters_by_likes:
-                        get_top_commenters(df, by="likes", top_n=top_n)
-
-                # Sentiment Analysis Over Time
-                st.subheader("Sentiment Analysis Over Time")
-                analyze_sentiment_over_time(df)
-
-                # Interactive Data Table
-                st.subheader("Interactive Comment Table")
-                display_interactive_table(df)
-
-                # User Engagement Score
-                st.subheader("User Engagement Score")
-                df = calculate_engagement(df)
-                st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
-
-                # Comment Summary
-                st.subheader("Comment Summary")
-                prompt = f"Summarize the following YouTube comments in a neutral and unbiased manner, providing an overview of the video's content and the discussion in the comments section. Please include the main topics, key points, and any notable trends or insights, without taking a stance or making assumptions. The comments are as follows:\n\n{df['Comment'].tolist()}\n\nPlease format the summary in bullet points."
-                try:
-                    response = chat_session.send_message(prompt)
-                    st.write(response.text.strip())
-                except Exception as e:
-                    st.error(f"Error summarizing comments: {e}")
+                analyze_comment_length(df
