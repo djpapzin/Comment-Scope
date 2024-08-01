@@ -2,7 +2,7 @@
 
 This Streamlit app leverages the power of Google's Gemini AI Flash model to analyze YouTube comments and provide insightful data visualizations.
 
-## Demo
+## [**Check Out The Demo Here**](https://youtube-comment-ai-scrutinizer.streamlit.app/)
 
 <table>
   <tr>
