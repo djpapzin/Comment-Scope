@@ -323,7 +323,7 @@ if trending_videos:
     display_video_metadata(selected_video)
     st.image(f"https://img.youtube.com/vi/{selected_video['videoId']}/hqdefault.jpg")
     
-    if st.button("Scrape Comments for Trending Video", key="scrape_trending_comments_button"):
+    if st.button("Scrutinize Comments for Trending Video", key="scrape_trending_comments_button"):
         video_id = selected_video['videoId']
         with st.spinner("Scraping comments..."):
             progress_bar = st.progress(0)
