@@ -3,3 +3,4 @@
 3. LLm to also highlight top 3 comment s with the most likes.
 4. link license file in readme file
 5.  when "scrutinize comments for trending video" button is clicked", he menus must be collapsed by default 
+6.  Add steps to readme on how to create .secrets.toml inside .streamlit directory
