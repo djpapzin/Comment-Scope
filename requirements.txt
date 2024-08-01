@@ -5,6 +5,6 @@ seaborn
 textblob
 wordcloud
 plotly
-st_aggrid==0.5.5
+st_aggrid==0.6.0
 google-api-python-client
 google-generativeai
