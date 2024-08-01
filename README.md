@@ -6,19 +6,19 @@ This Streamlit app leverages the power of Google's Gemini AI Flash model to anal
 
 <table>
   <tr>
-    <td><img src="demo/main_menu.jpeg" alt="Main Demo"></td>
-    <td><img src="demo/sentiment_analysis.jpeg" alt="Sentiment Analysis Demo"></td>
-    <td><img src="demo/word_cloud.jpeg" alt="Word Cloud Demo"></td>
+    <td><img src="demo_images/main_menu.jpeg" alt="Main Demo"></td>
+    <td><img src="demo_images/sentiment_analysis.jpeg" alt="Sentiment Analysis Demo"></td>
+    <td><img src="demo_images/word_cloud.jpeg" alt="Word Cloud Demo"></td>
   </tr>
   <tr>
-    <td><img src="demo/comment_length_analysis.jpeg" alt="Comment Length Demo"></td>
-    <td><img src="demo/user_engagement_score.jpeg" alt="User Engagement Demo"></td>
-    <td><img src="demo/sentiment_overtime.jpeg" alt="Sentiment Overtime Demo"></td
+    <td><img src="demo_images/comment_length_analysis.jpeg" alt="Comment Length Demo"></td>
+    <td><img src="demo_images/user_engagement_score.jpeg" alt="User Engagement Demo"></td>
+    <td><img src="demo_images/sentiment_overtime.jpeg" alt="Sentiment Overtime Demo"></td
   </tr>
   <tr>
-    <td><img src="demo/comments_summary.jpeg" alt="Comments Summary Demo"></td>
-    <td><img src="demo/top_commenters.jpeg" alt="Top Commenters Demo"></td>
-    <td><img src="demo/collapsed_menu.jpeg" alt="Collapsed Menu Demo"></td>
+    <td><img src="demo_images/comments_summary.jpeg" alt="Comments Summary Demo"></td>
+    <td><img src="demo_images/top_commenters.jpeg" alt="Top Commenters Demo"></td>
+    <td><img src="demo_images/collapsed_menu.jpeg" alt="Collapsed Menu Demo"></td>
 
   </tr>
 </table>
