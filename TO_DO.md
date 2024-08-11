@@ -5,7 +5,11 @@
 - [x] 5.  when "scrutinize comments for trending video" button is clicked", he menus must be collapsed by default 
 - [x] 6.  Add steps to readme on how to create .secrets.toml inside .streamlit directory
 - [x] 7. Save comments as JSon
-- [ ] 8. Pass all comments to Gemini Exp (gemini-1.5-pro-exp-0801) for indepth analysis
+- [ ] 8. Pass all comments to Gemini Exp (gemini-1.5-pro-exp-0801) for indepth analysi. Here's the code snippet on how to implement it (Refer to gemini_implement.py)
 - [x] 9. Add instructions to the readme on how to install the required packages. 
 - [x] 10. Be able to take both links. for example: "https://youtu.be/DHMMbnCSW-I?si=7W95Lcq2Qjt4Gw7K" and "https://www.youtube.com/watch?v=DHMMbnCSW-I&ab_channel=ThePoorMansPodcastReacts" point to the same video
 - [x] 11. Convert the to_do.md to a checklist and tick off the things we've completed 
+- [ ] Video information for trending video must appear below video
+- [ ] Remove numbering from the checklist in to_do.md file
+- [ ] "Scrutinize comments for trending video" must just e "Scrutinize Comments"
+- [ ]
