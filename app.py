@@ -353,8 +353,8 @@ def generate_video_summary(video_id, comments):
         return "Error generating video summary."
 
 # Streamlit App
-st.set_page_config(page_title="Youtube Comment AI Scrutinizer 🔬", page_icon="🔬") # Set page title and favicon
-st.title("Youtube Comment AI Scrutinizer 🔬")  # Add emoji to the title
+st.set_page_config(page_title="🔬 CommentScope: Powered by Gemini AI", page_icon="🔬") # Set page title and favicon
+st.title("🔬 CommentScope: Powered by Gemini AI")  # Add emoji to the title
 
 # Initialize session state
 if 'df' not in st.session_state:
