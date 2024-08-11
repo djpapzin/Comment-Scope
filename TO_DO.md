@@ -11,3 +11,4 @@
 - [ ] Implement a comment filtering system using safety settings, users must be able to have a n option to filter harmful/unwanted bu by default,all comments are shown. 
 - [x] The emoji must appear before the title
 - [ ] Turn all the groups into side navigation tabs 
+- [ ] Powered by Gemini AI must be in itylics
