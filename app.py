@@ -352,9 +352,27 @@ def generate_video_summary(video_id, comments):
         logging.error(f"Error generating video summary: {e}")
         return "Error generating video summary."
 
+# --- New Functions for Community Consensus ---
+
+def identify_controversial_topics(comments):
+    # TODO: Implement logic to identify controversial topics
+    # This is a placeholder, you'll need to use NLP techniques
+    # to analyze the comments and identify topics with significant
+    # positive and negative sentiment.
+    return ["Example Controversial Topic 1", "Example Controversial Topic 2"]
+
+def summarize_community_consensus(comments, topic):
+    # TODO: Implement logic to summarize the majority opinion
+    # This is a placeholder, you'll need to use NLP techniques
+    # to analyze the comments related to the topic and summarize
+    # the majority opinion.
+    return f"Majority opinion on {topic}: This is a placeholder for the summary."
+
+# --- End of New Functions ---
+
 # Streamlit App
-st.set_page_config(page_title="🔬 CommentScope: Powered by Gemini AI", page_icon="🔬") # Set page title and favicon
-st.title("🔬 CommentScope: Powered by Gemini AI")  # Add emoji to the title
+st.set_page_config(page_title="Youtube Comment AI Scrutinizer 🔬", page_icon="🔬") # Set page title and favicon
+st.title("Youtube Comment AI Scrutinizer 🔬")  # Add emoji to the title
 
 # Initialize session state
 if 'df' not in st.session_state:
@@ -470,6 +488,17 @@ if st.button("Scrutinize Comments"):
                 with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
                     summary = generate_video_summary(video_id, df["Comment"].tolist())
                     st.write(summary)
+
+                # --- Community Consensus ---
+                with st.expander("Community Consensus", expanded=False):
+                    controversial_topics = identify_controversial_topics(df["Comment"].tolist())
+                    if controversial_topics:
+                        for topic in controversial_topics:
+                            st.write(f"**Topic:** {topic}")
+                            consensus = summarize_community_consensus(df["Comment"].tolist(), topic)
+                            st.write(consensus)
+                    else:
+                        st.write("No controversial topics identified.")
 
 # --- Comparative Analysis ---
 st.header("Comparative Analysis")
