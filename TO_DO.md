@@ -1,5 +1,4 @@
-- [ ] There are 2 buttons under "Trending video" instead of 1 button, fix it
-- [ ] help fix this error: " Error summarizing comments: module 'google.generativeai' has no attribute      'HarmBlockThreshold'. Error summarizing comments. Please try again later.
-- [ ] Fix error: Error generating video summary.
-- [ ] Fix error: Error performing in-depth analysis. Please try again later.
-- [ ] Add a "Storyteller" feature that weaves together related comments to create a narrative about viewers' experiences
+- [x] There are 2 buttons under "Trending video" instead of 1 button, fix it
+- [x] help fix this error: " Error summarizing comments: module 'google.generativeai' has no attribute      'HarmBlockThreshold'. Error summarizing comments. Please try again later.
+- [x] Fix error: Error generating video summary.
+- [x] Fix error: Error performing in-depth analysis. Please try again later.
