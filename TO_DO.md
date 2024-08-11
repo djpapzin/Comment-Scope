@@ -1,7 +1,3 @@
-- [x] Change "Scrutinize Comments" button to "Scrutinize"
-- [x] Add more visualizations during the scrapping process, let's use various spinners as tusers watits for comments, they must be updated all along the way on what iss happening while waiting.
-- [x] The "Video Summary (Gemini Pro Exp)" must use the youtube transcript to generate the summary
-- [x] Send All comements nd replies to th gemini model to geta  comprehensive summary, it has 2m context window to handle all the incoming te
 - [ ] Create a "Community Consensus" feature that summarizes the majority opinion on controversial topics discussed in the comments
 - [ ] Add a "Storyteller" feature that weaves together related comments to create a narrative about viewers' experiences
 - [ ] Create a "Time Saver" mode that summarizes long comment threads into brief bullet points
