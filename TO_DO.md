@@ -2,15 +2,9 @@
 - [x] Implement enhanced comment analysis using the large context window to analyze entire comment threads together
 - [x] Add comparative analysis feature to compare comments across multiple videos or an entire channel
 - [x] Generate comprehensive video summaries based on video content and comments
-- [ ] Implement advanced topic modeling and trend detection in comments
-- [ ] Add user behavior analysis to identify influencers and create user profiles
-- [ ] Incorporate multi-modal analysis by analyzing video thumbnails, titles, and descriptions along with comments
-- [ ] Implement predictive analytics for video performance based on early comment patterns
-- [ ] Create dynamic, interactive time-based visualizations for sentiment and engagement evolution
-- [ ] Perform deeper linguistic analysis to identify cultural references and community-specific language
-- [ ] Add customizable insights feature allowing users to define custom metrics
-- [ ] Provide historical context for trending videos or popular creators
-- [ ] Offer content moderation insights by identifying problematic comments or patterns
-- [ ] Implement audience segmentation based on commenting behavior and preferences
-- [ ] Extend analysis to include related discussions on other platforms (cross-platform analysis)
-- [ ] Add natural language querying feature for complex questions about the comments
+- [ ] "Scraping comments..." must change to "Scrutinizing comments..."
+- [ ] Fix this error "Error summarizing comments."
+- [ ] Fix this error "Error performing in-depth analysis."
+- [ ] Fix the following error: "DuplicateWidgetID: There are multiple widgets with the same key='scrape_trending_comments_button_unique'.
+
+To fix this, please make sure that the key argument is unique for each widget you create."
