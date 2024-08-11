@@ -489,7 +489,7 @@ if trending_videos:
     # Display video metadata below the thumbnail
     display_video_metadata(selected_video)
     
-    if st.button("Scrutinize Comments", key="scrape_trending_comments_button_unique"):
+    if st.button("Scrutinize Comments", key=f"scrape_trending_comments_button_{selected_video['videoId']}"):
         video_id = selected_video['videoId']
         with st.spinner("Scrutinizing comments..."):
             progress_bar = st.progress(0, text="Scrutinizing comments...")
@@ -574,5 +574,5 @@ if st.session_state.get("scrape_trending_comments_button_clicked"):
     st.experimental_rerun()
 
 # Set session state variable when button is clicked
-if st.button("Scrutinize Comments", key="scrape_trending_comments_button_unique"):
+if st.button("Scrutinize Comments", key=f"scrape_trending_comments_button_{selected_video['videoId']}"):
     st.session_state["scrape_trending_comments_button_clicked"] = True
