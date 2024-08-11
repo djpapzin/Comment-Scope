@@ -2,9 +2,9 @@
 - [x] Implement enhanced comment analysis using the large context window to analyze entire comment threads together
 - [x] Add comparative analysis feature to compare comments across multiple videos or an entire channel
 - [x] Generate comprehensive video summaries based on video content and comments
-- [ ] "Scraping comments..." must change to "Scrutinizing comments..."
-- [ ] Fix this error "Error summarizing comments."
-- [ ] Fix this error "Error performing in-depth analysis."
-- [ ] Fix the following error: "DuplicateWidgetID: There are multiple widgets with the same key='scrape_trending_comments_button_unique'.
+- [x] "Scraping comments..." must change to "Scrutinizing comments..."
+- [x] Fix this error "Error summarizing comments."
+- [x] Fix this error "Error performing in-depth analysis."
+- [x] Fix the following error: "DuplicateWidgetID: There are multiple widgets with the same key='scrape_trending_comments_button_unique'.
 
 To fix this, please make sure that the key argument is unique for each widget you create."

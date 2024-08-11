@@ -86,7 +86,7 @@ def scrape_youtube_comments(youtube_api_key, video_id):
     try:
         next_page_token = None
         page_count = 0
-        progress_bar = st.progress(0, text="Scraping comments...")
+        progress_bar = st.progress(0, text="Scrutinizing comments...")
         while True:
             request = youtube.commentThreads().list(
                 part="snippet,replies",
@@ -125,7 +125,7 @@ def scrape_youtube_comments(youtube_api_key, video_id):
                 break
 
             page_count += 1
-            progress_bar.progress(min(page_count / 10, 1.0), text="Scraping comments...")
+            progress_bar.progress(min(page_count / 10, 1.0), text="Scrutinizing comments...")
 
         df = pd.DataFrame(comments, columns=["Name", "Comment", "Likes", "Time", "Reply Count", "Sentiment"])
         df['Time'] = pd.to_datetime(df['Time'], utc=True)
@@ -245,7 +245,8 @@ def summarize_comments(comments):
         return response.text.strip()
     except Exception as e:
         logging.error(f"Error summarizing comments: {e}")
-        return "Error summarizing comments."
+        st.error(f"Error summarizing comments: {e}")  # Display error message to the user
+        return "Error summarizing comments. Please try again later."
 
 # Function to get top comments by likes
 def get_top_comments_by_likes(df, top_n=3):
@@ -277,7 +278,8 @@ def in_depth_analysis(comments):
         return response.text.strip()
     except Exception as e:
         logging.error(f"Error performing in-depth analysis: {e}")
-        return "Error performing in-depth analysis."
+        st.error(f"Error performing in-depth analysis: {e}")  # Display error message to the user
+        return "Error performing in-depth analysis. Please try again later."
 
 # Function to perform comparative analysis
 def comparative_analysis(dfs, video_ids):
@@ -355,9 +357,9 @@ if st.button("Scrutinize", key="scrape_comments_button"):
     video_id = extract_video_id(video_url)
     if video_id:
         with st.spinner("Scrutinizing comments..."):
-            progress_bar = st.progress(0, text="Scraping comments...")
+            progress_bar = st.progress(0, text="Scrutinizing comments...")
             df, total_comments = scrape_youtube_comments(youtube_api_key, video_id)
-            progress_bar.progress(1.0, text="Scraping comments...")
+            progress_bar.progress(1.0, text="Scrutinizing comments...")
             if df is None or total_comments is None:
                 st.error("Error scraping comments. Please try again.")
             else:
@@ -460,7 +462,7 @@ if st.button("Compare", key="compare_comments_button"):
         video_id = extract_video_id(url)
         if video_id:
             video_ids.append(video_id)
-            with st.spinner(f"Scraping comments for video {video_id}..."):
+            with st.spinner(f"Scrutinizing comments for video {video_id}..."):
                 df, total_comments = scrape_youtube_comments(youtube_api_key, video_id)
                 if df is not None:
                     dfs.append(df)
@@ -483,12 +485,12 @@ if trending_videos:
     # Display video metadata below the thumbnail
     display_video_metadata(selected_video)
     
-    if st.button("Scrutinize Comments", key="scrape_trending_comments_button_unique"):
+    if st.button("Scrutinize Comments", key="scrape_trending_comments_button"):
         video_id = selected_video['videoId']
-        with st.spinner("Scraping comments..."):
-            progress_bar = st.progress(0, text="Scraping comments...")
+        with st.spinner("Scrutinizing comments..."):
+            progress_bar = st.progress(0, text="Scrutinizing comments...")
             df, total_comments = scrape_youtube_comments(youtube_api_key, video_id)
-            progress_bar.progress(1.0, text="Scraping comments...")
+            progress_bar.progress(1.0, text="Scrutinizing comments...")
             if df is None or total_comments is None:
                 st.error("Error scraping comments. Please try again.")
             else:
@@ -568,5 +570,5 @@ if st.session_state.get("scrape_trending_comments_button_clicked"):
     st.experimental_rerun()
 
 # Set session state variable when button is clicked
-if st.button("Scrutinize Comments", key="scrape_trending_comments_button_unique"):
+if st.button("Scrutinize Comments", key="scrape_trending_comments_button"):
     st.session_state["scrape_trending_comments_button_clicked"] = True
