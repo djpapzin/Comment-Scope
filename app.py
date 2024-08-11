@@ -44,6 +44,15 @@ model = genai.GenerativeModel(
 # Start a chat session
 chat_session = model.start_chat()
 
+# --- Initialize Gemini Pro Exp Model ---
+gemini_pro_exp_model = genai.GenerativeModel(
+    model_name="gemini-1.5-pro-exp-0801",
+    generation_config=generation_config,
+)
+
+gemini_pro_exp_chat_session = gemini_pro_exp_model.start_chat()
+# --- End of Gemini Pro Exp Initialization ---
+
 # --- End of Gemini Integration ---
 
 # Function to extract video ID from YouTube URL
@@ -251,7 +260,6 @@ def in_depth_analysis(comments):
     all_comments = "\n\n".join(comments)
     prompt = f"Provide an in-depth analysis of the following YouTube comments, focusing on the overall sentiment, key themes and topics, and any interesting patterns or insights you can identify:\n\n{all_comments}"
     try:
-        # Assuming you have a `gemini_pro_exp_chat_session` initialized with the Pro Exp model
         response = gemini_pro_exp_chat_session.send_message(prompt)
         return response.text.strip()
     except Exception as e:
