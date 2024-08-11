@@ -7,3 +7,6 @@
 7. Save comments as JSon
 8. Pass all comments to Gemini Exp (gemini-1.5-pro-exp-0801) for indepth analysis
 9. Add instructions to the readme on how to install the required packages. 
+10. Be able to take both links. for example: "https://youtu.be/DHMMbnCSW-I?si=7W95Lcq2Qjt4Gw7K" and "https://www.youtube.com/watch?v=DHMMbnCSW-I&ab_channel=ThePoorMansPodcastReacts" point to the same video
+11. Convert the to_do.md to a checklist and tick off the things we've completed 
+12. On the readme, step 2 of installation, please specify teh code to automate the creation of teh fodler and t file
