@@ -1,4 +1,12 @@
-- [x] There are 2 buttons under "Trending video" instead of 1 button, fix it
-- [x] help fix this error: " Error summarizing comments: module 'google.generativeai' has no attribute      'HarmBlockThreshold'. Error summarizing comments. Please try again later.
-- [x] Fix error: Error generating video summary.
-- [x] Fix error: Error performing in-depth analysis. Please try again later.
+- [ ] Create a "Community Consensus" feature that summarizes the majority opinion on controversial topics discussed in the comments
+- [ ] Add a "Storyteller" feature that weaves together related comments to create a narrative about viewers' experiences
+- [ ] Create a "Time Saver" mode that summarizes long comment threads into brief bullet points
+- [ ] Develop a "Controversy Meter" that highlights if there are significant disagreements or debates in the comments
+- [ ] Implement a "Quick Pulse" feature that provides a 2-3 sentence summary of the overall comment sentiment and main topics
+- [ ] Develop a "Controversy Meter" that highlights if there are significant disagreements or debates in the comments
+- [ ] Add "Chat with comments" feature using doc_search_embeddings.txt
+- [ ] **Add "Chat with comments" feature using doc_search_embeddings.txt**: Explore the possibility of using embeddings to allow users to ask questions about the comments and receive relevant answers.
+- [ ] **Enhance "Quick Pulse"**: Make the summary more engaging and user-friendly. Consider using emojis to represent sentiment visually.
+- [ ] Change "Scrutinize Comments" button to "Scrutinize"
+- [ ] Add more visualizations during the scrapping process, let's use various spinners as tusers watits for comments, they must be updated all along trheway on what iss happening while waiting.
+- [ ] The "Video Summary (Gemini Pro Exp)" must use the youtube transcript to generate theummary.
