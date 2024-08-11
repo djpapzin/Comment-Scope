@@ -241,7 +241,11 @@ def summarize_comments(comments):
     all_comments = "\n\n".join(comments)
     prompt = f"Summarize the following YouTube comments:\n\n{all_comments}"
     try:
-        response = chat_session.send_message(prompt)
+        # Adjust safety settings to allow more content
+        response = chat_session.send_message(prompt, safety_settings=[
+            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": genai.HarmBlockThreshold.BLOCK_NONE},
+            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": genai.HarmBlockThreshold.BLOCK_NONE},
+        ])
         return response.text.strip()
     except Exception as e:
         logging.error(f"Error summarizing comments: {e}")
@@ -485,7 +489,7 @@ if trending_videos:
     # Display video metadata below the thumbnail
     display_video_metadata(selected_video)
     
-    if st.button("Scrutinize Comments", key="scrape_trending_comments_button"):
+    if st.button("Scrutinize Comments", key="scrape_trending_comments_button_unique"): # Give this button a unique key
         video_id = selected_video['videoId']
         with st.spinner("Scrutinizing comments..."):
             progress_bar = st.progress(0, text="Scrutinizing comments...")
