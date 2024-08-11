@@ -8,3 +8,4 @@
 - [ ] **Add "Chat with comments" feature using doc_search_embeddings.txt**: Explore the possibility of using embeddings to allow users to ask questions about the comments and receive relevant answers.
 - [ ] **Enhance "Quick Pulse"**: Make the summary more engaging and user-friendly. Consider using emojis to represent sentiment visually. - **Consider enhancing the existing "Comments Summary" feature instead.**
 - [ ] Change streamlit name to "CommentScope: Powered by Gemini AI"
+- [ ] Implement a scomment filetrring system using safety settings, users must be able to have a n option to filter harmful/iunwabntedts bu by default,all comments are shown. 
