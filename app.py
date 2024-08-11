@@ -13,6 +13,7 @@ import streamlit as st
 from st_aggrid import AgGrid, GridUpdateMode, DataReturnMode
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 import google.generativeai as genai
+import uuid  # Import uuid module
 
 # Load API key from Streamlit secrets
 gemini_api_key = st.secrets["general"]["GEMINI_API_KEY"]
@@ -489,7 +490,9 @@ if trending_videos:
     # Display video metadata below the thumbnail
     display_video_metadata(selected_video)
     
-    if st.button("Scrutinize Comments", key=f"scrape_trending_comments_button_{selected_video['videoId']}"):
+    # Generate a unique key using uuid
+    unique_key = str(uuid.uuid4())
+    if st.button("Scrutinize Comments", key=f"scrape_trending_comments_button_{unique_key}"):
         video_id = selected_video['videoId']
         with st.spinner("Scrutinizing comments..."):
             progress_bar = st.progress(0, text="Scrutinizing comments...")
@@ -567,12 +570,3 @@ if trending_videos:
                 with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
                     summary = generate_video_summary(video_id, df["Comment"].tolist())
                     st.write(summary)
-
-# Collapse menus after clicking "Scrutinize Comments"
-if st.session_state.get("scrape_trending_comments_button_clicked"):
-    st.session_state["scrape_trending_comments_button_clicked"] = False
-    st.experimental_rerun()
-
-# Set session state variable when button is clicked
-if st.button("Scrutinize Comments", key=f"scrape_trending_comments_button_{selected_video['videoId']}"):
-    st.session_state["scrape_trending_comments_button_clicked"] = True
