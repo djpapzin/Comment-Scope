@@ -244,8 +244,8 @@ def summarize_comments(comments):
     try:
         # Adjust safety settings to allow more content
         response = chat_session.send_message(prompt, safety_settings=[
-            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": genai.HarmBlockThreshold.BLOCK_NONE},
-            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": genai.HarmBlockThreshold.BLOCK_NONE},
+            {"category": "HARM_CATEGORY_HATE_SPEECH", "block_threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_HARASSMENT", "block_threshold": "BLOCK_NONE"},
         ])
         return response.text.strip()
     except Exception as e:
@@ -557,7 +557,10 @@ if trending_videos:
                 st.subheader("Comments Summary")
                 prompt = f"Summarize the following YouTube comments in a neutral and unbiased manner, providing an overview of the video's content and the discussion in the comments section. Please include the main topics, key points, and any notable trends or insights, without taking a stance or making assumptions. The comments are as follows:\n\n{df['Comment'].tolist()}\n\nPlease format the summary in bullet points."
                 try:
-                    response = chat_session.send_message(prompt)
+                    response = chat_session.send_message(prompt, safety_settings=[
+                        {"category": "HARM_CATEGORY_HATE_SPEECH", "block_threshold": "BLOCK_NONE"},
+                        {"category": "HARM_CATEGORY_HARASSMENT", "block_threshold": "BLOCK_NONE"},
+                    ])
                     st.write(response.text.strip())
                 except Exception as e:
                     st.error(f"Error summarizing comments: {e}")
