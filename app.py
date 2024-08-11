@@ -349,10 +349,14 @@ trending_videos = get_trending_videos(youtube_api_key)
 if trending_videos:
     video_selection = st.selectbox("Select a trending video", [f"{video['title']} (by {video['channelTitle']})" for video in trending_videos])
     selected_video = next(video for video in trending_videos if f"{video['title']} (by {video['channelTitle']})" == video_selection)
-    display_video_metadata(selected_video)
-    st.image(f"https://img.youtube.com/vi/{selected_video['videoId']}/hqdefault.jpg")
     
-    if st.button("Scrutinize Comments for Trending Video", key="scrape_trending_comments_button"):
+    # Display video thumbnail
+    st.image(f"https://img.youtube.com/vi/{selected_video['videoId']}/hqdefault.jpg")
+
+    # Display video metadata below the thumbnail
+    display_video_metadata(selected_video)
+    
+    if st.button("Scrutinize Comments", key="scrape_trending_comments_button"):
         video_id = selected_video['videoId']
         with st.spinner("Scraping comments..."):
             progress_bar = st.progress(0, text="Scraping comments...")
@@ -422,11 +426,11 @@ if trending_videos:
                 except Exception as e:
                     st.error(f"Error summarizing comments: {e}")
 
-# Collapse menus after clicking "Scrutinize Comments for Trending Video"
+# Collapse menus after clicking "Scrutinize Comments"
 if st.session_state.get("scrape_trending_comments_button_clicked"):
     st.session_state["scrape_trending_comments_button_clicked"] = False
     st.experimental_rerun()
 
 # Set session state variable when button is clicked
-if st.button("Scrutinize Comments for Trending Video", key="scrape_trending_comments_button"):
+if st.button("Scrutinize Comments", key="scrape_trending_comments_button"):
     st.session_state["scrape_trending_comments_button_clicked"] = True
