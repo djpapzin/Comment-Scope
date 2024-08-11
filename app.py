@@ -242,7 +242,7 @@ def summarize_comments(comments):
     all_comments = "\n\n".join(comments)
     prompt = f"Summarize the following YouTube comments:\n\n{all_comments}"
     try:
-        # Updated safety settings (removed block_threshold)
+        # Updated safety settings (removed threshold)
         response = chat_session.send_message(prompt, safety_settings=[
             {"category": "HARM_CATEGORY_HATE_SPEECH", "harm_probability_cutoff": 0.0},
             {"category": "HARM_CATEGORY_HARASSMENT", "harm_probability_cutoff": 0.0},
@@ -557,7 +557,7 @@ if trending_videos:
                 st.subheader("Comments Summary")
                 prompt = f"Summarize the following YouTube comments in a neutral and unbiased manner, providing an overview of the video's content and the discussion in the comments section. Please include the main topics, key points, and any notable trends or insights, without taking a stance or making assumptions. The comments are as follows:\n\n{df['Comment'].tolist()}\n\nPlease format the summary in bullet points."
                 try:
-                    # Updated safety settings (removed block_threshold)
+                    # Updated safety settings (removed threshold)
                     response = chat_session.send_message(prompt, safety_settings=[
                         {"category": "HARM_CATEGORY_HATE_SPEECH", "harm_probability_cutoff": 0.0},
                         {"category": "HARM_CATEGORY_HARASSMENT", "harm_probability_cutoff": 0.0},
