@@ -256,15 +256,47 @@ def get_top_comments_by_likes(df, top_n=3):
 def in_depth_analysis(comments):
     if not comments:
         return "No comments to analyze."
-    
-    all_comments = "\n\n".join(comments)
-    prompt = f"Provide an in-depth analysis of the following YouTube comments, focusing on the overall sentiment, key themes and topics, and any interesting patterns or insights you can identify:\n\n{all_comments}"
+
+    # Process comments within a thread as a single unit
+    threads = []
+    current_thread = []
+    for comment in comments:
+        if comment.startswith("@"):  # Assuming replies start with "@"
+            current_thread.append(comment)
+        else:
+            if current_thread:
+                threads.append("\n".join(current_thread))
+            current_thread = [comment]
+    if current_thread:
+        threads.append("\n".join(current_thread))
+
+    all_comments = "\n\n---\n\n".join(threads)
+    prompt = f"Provide an in-depth analysis of the following YouTube comment threads, focusing on the overall sentiment, key themes and topics, and any interesting patterns or insights you can identify:\n\n{all_comments}"
     try:
         response = gemini_pro_exp_chat_session.send_message(prompt)
         return response.text.strip()
     except Exception as e:
         logging.error(f"Error performing in-depth analysis: {e}")
         return "Error performing in-depth analysis."
+
+# Function to perform comparative analysis
+def comparative_analysis(dfs, video_ids):
+    if not dfs:
+        return "No data to compare."
+
+    all_comments = []
+    for i, df in enumerate(dfs):
+        comments = "\n\n".join(df["Comment"].tolist())
+        all_comments.append(f"Comments for Video {video_ids[i]}:\n{comments}")
+
+    all_comments_str = "\n\n---\n\n".join(all_comments)
+    prompt = f"Compare and contrast the comments across the following YouTube videos, focusing on the overall sentiment, key themes and topics, and any interesting patterns or insights you can identify:\n\n{all_comments_str}"
+    try:
+        response = gemini_pro_exp_chat_session.send_message(prompt)
+        return response.text.strip()
+    except Exception as e:
+        logging.error(f"Error performing comparative analysis: {e}")
+        return "Error performing comparative analysis."
 
 # Streamlit App
 st.title("Youtube Comment AI Scrutinizer")
@@ -275,6 +307,8 @@ if 'df' not in st.session_state:
 if 'filtered_df' not in st.session_state:
     st.session_state['filtered_df'] = pd.DataFrame()
 
+# --- Single Video Analysis ---
+st.header("Single Video Analysis")
 video_url = st.text_input("Enter YouTube video URL")
 
 # Scrape Comments Button
@@ -370,7 +404,29 @@ if st.button("Scrutinize", key="scrape_comments_button"):
                 with st.expander("In-Depth Analysis (Gemini Pro Exp)", expanded=False):
                     st.write(in_depth_analysis(df["Comment"].tolist()))
 
-# Display trending videos
+# --- Comparative Analysis ---
+st.header("Comparative Analysis")
+video_urls = st.text_area("Enter YouTube video URLs (one per line)")
+video_urls = video_urls.strip().splitlines()
+
+if st.button("Compare", key="compare_comments_button"):
+    video_ids = []
+    dfs = []
+    for url in video_urls:
+        video_id = extract_video_id(url)
+        if video_id:
+            video_ids.append(video_id)
+            with st.spinner(f"Scraping comments for video {video_id}..."):
+                df, total_comments = scrape_youtube_comments(youtube_api_key, video_id)
+                if df is not None:
+                    dfs.append(df)
+
+    if dfs:
+        with st.spinner("Performing comparative analysis..."):
+            analysis = comparative_analysis(dfs, video_ids)
+            st.write(analysis)
+
+# --- Trending Videos ---
 st.header("Trending Videos")
 trending_videos = get_trending_videos(youtube_api_key)
 if trending_videos:

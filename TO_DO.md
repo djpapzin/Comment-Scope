@@ -1,6 +1,6 @@
 - [x] Pass all comments to Gemini Exp (gemini-1.5-pro-exp-0801) for in-depth analysis. Here's the code snippet on how to implement it (Refer to gemini_implement.py)
-- [ ] Implement enhanced comment analysis using the large context window to analyze entire comment threads together
-- [ ] Add comparative analysis feature to compare comments across multiple videos or an entire channel
+- [x] Implement enhanced comment analysis using the large context window to analyze entire comment threads together
+- [x] Add comparative analysis feature to compare comments across multiple videos or an entire channel
 - [ ] Generate comprehensive video summaries based on video content and comments
 - [ ] Implement advanced topic modeling and trend detection in comments
 - [ ] Add user behavior analysis to identify influencers and create user profiles
