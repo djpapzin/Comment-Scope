@@ -243,6 +243,21 @@ def get_top_comments_by_likes(df, top_n=3):
     top_comments = df.nlargest(top_n, "Likes")
     return top_comments[["Name", "Comment", "Likes"]]
 
+# Function to perform in-depth analysis with Gemini Pro Exp
+def in_depth_analysis(comments):
+    if not comments:
+        return "No comments to analyze."
+    
+    all_comments = "\n\n".join(comments)
+    prompt = f"Provide an in-depth analysis of the following YouTube comments, focusing on the overall sentiment, key themes and topics, and any interesting patterns or insights you can identify:\n\n{all_comments}"
+    try:
+        # Assuming you have a `gemini_pro_exp_chat_session` initialized with the Pro Exp model
+        response = gemini_pro_exp_chat_session.send_message(prompt)
+        return response.text.strip()
+    except Exception as e:
+        logging.error(f"Error performing in-depth analysis: {e}")
+        return "Error performing in-depth analysis."
+
 # Streamlit App
 st.title("Youtube Comment AI Scrutinizer")
 
@@ -343,6 +358,10 @@ if st.button("Scrutinize", key="scrape_comments_button"):
                     df = calculate_engagement(df)
                     st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
 
+                # In-Depth Analysis with Gemini Pro Exp
+                with st.expander("In-Depth Analysis (Gemini Pro Exp)", expanded=False):
+                    st.write(in_depth_analysis(df["Comment"].tolist()))
+
 # Display trending videos
 st.header("Trending Videos")
 trending_videos = get_trending_videos(youtube_api_key)
@@ -425,6 +444,10 @@ if trending_videos:
                     st.write(response.text.strip())
                 except Exception as e:
                     st.error(f"Error summarizing comments: {e}")
+
+                # In-Depth Analysis with Gemini Pro Exp
+                with st.expander("In-Depth Analysis (Gemini Pro Exp)", expanded=False):
+                    st.write(in_depth_analysis(df["Comment"].tolist()))
 
 # Collapse menus after clicking "Scrutinize Comments"
 if st.session_state.get("scrape_trending_comments_button_clicked"):
