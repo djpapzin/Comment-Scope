@@ -113,26 +113,12 @@ def scrape_youtube_comments(youtube_api_key, video_id):
 
             for item in response["items"]:
                 comment = item["snippet"]["topLevelComment"]["snippet"]
-                comments.append([
-                    comment["authorDisplayName"],
-                    comment["textDisplay"],
-                    comment["likeCount"],
-                    comment["publishedAt"],
-                    item["snippet"]["totalReplyCount"],
-                    analyze_sentiment(comment["textDisplay"])
-                ])
+                comments.append(comment["textDisplay"])
 
                 if "replies" in item:
                     for reply in item["replies"]["comments"]:
                         reply_comment = reply["snippet"]
-                        comments.append([
-                            reply_comment["authorDisplayName"],
-                            reply_comment["textDisplay"],
-                            reply_comment["likeCount"],
-                            reply_comment["publishedAt"],
-                            0,
-                            analyze_sentiment(reply_comment["textDisplay"])
-                        ])
+                        comments.append(reply_comment["textDisplay"])
 
             if "nextPageToken" in response:
                 next_page_token = response["nextPageToken"]
@@ -142,8 +128,7 @@ def scrape_youtube_comments(youtube_api_key, video_id):
             page_count += 1
             progress_bar.progress(min(page_count / 10, 1.0), text=f"Scrutinizing comments... (Page {page_count})")  # More detailed progress update
 
-        df = pd.DataFrame(comments, columns=["Name", "Comment", "Likes", "Time", "Reply Count", "Sentiment"])
-        df['Time'] = pd.to_datetime(df['Time'], utc=True)
+        df = pd.DataFrame(comments, columns=["Comment"])
         total_comments = len(comments)
         return df, total_comments
 
@@ -382,7 +367,7 @@ st.header("Single Video Analysis")
 video_url = st.text_input("Enter YouTube video URL")
 
 # Scrape Comments Button
-if st.button("Scrutinize", key="scrape_comments_button"):  # Changed button label
+if st.button("Scrutinize Comments"):
     video_id = extract_video_id(video_url)
     if video_id:
         with st.spinner("Scrutinizing comments..."):
@@ -491,7 +476,7 @@ st.header("Comparative Analysis")
 video_urls = st.text_area("Enter YouTube video URLs (one per line)")
 video_urls = video_urls.strip().splitlines()
 
-if st.button("Compare", key="compare_comments_button"):
+if st.button("Compare"):
     video_ids = []
     dfs = []
     for url in video_urls:
@@ -523,7 +508,7 @@ if trending_videos:
     
     # Generate a unique key using uuid
     unique_key = str(uuid.uuid4())
-    if st.button("Scrutinize", key=f"scrape_trending_comments_button_{unique_key}"):  # Changed button label
+    if st.button("Scrutinize Comments", key=f"scrape_trending_comments_button_{unique_key}"):
         video_id = selected_video['videoId']
         with st.spinner("Scrutinizing comments..."):
             progress_bar = st.progress(0, text="Scrutinizing comments...")
