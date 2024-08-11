@@ -12,3 +12,4 @@
 - [x] The emoji must appear before the title
 - [ ] Turn all the groups into side navigation tabs 
 - [ ] Powered by Gemini AI must be in itylics
+- [ ] scrutinize comments button for trending videos is not working
