@@ -371,7 +371,7 @@ st.header("Single Video Analysis")
 video_url = st.text_input("Enter YouTube video URL")
 
 # Scrape Comments Button
-if st.button("Scrutinize", key="scrape_comments_button"):
+if st.button("Scrutinize", key="scrape_comments_button"):  # Changed button label
     video_id = extract_video_id(video_url)
     if video_id:
         with st.spinner("Scrutinizing comments..."):
