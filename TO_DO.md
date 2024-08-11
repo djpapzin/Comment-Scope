@@ -8,5 +8,7 @@
 - [ ] **Add "Chat with comments" feature using doc_search_embeddings.txt**: Explore the possibility of using embeddings to allow users to ask questions about the comments and receive relevant answers.
 - [ ] **Enhance "Quick Pulse"**: Make the summary more engaging and user-friendly. Consider using emojis to represent sentiment visually.
 - [ ] Change "Scrutinize Comments" button to "Scrutinize"
-- [ ] Add more visualizations during the scrapping process, let's use various spinners as tusers watits for comments, they must be updated all along trheway on what iss happening while waiting.
-- [ ] The "Video Summary (Gemini Pro Exp)" must use the youtube transcript to generate theummary.
+- [ ] Add more visualizations during the scrapping process, let's use various spinners as tusers watits for comments, they must be updated all along the way on what iss happening while waiting.
+- [ ] The "Video Summary (Gemini Pro Exp)" must use the youtube transcript to generate the summary
+- [ ] Addd emoji to our streamlit app
+- [ ] Send All comements nd replies to th gemini model to geta  comprehensive summary, it has 2m context window to handle all the incoming te
