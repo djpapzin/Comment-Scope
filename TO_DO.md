@@ -1,14 +1,16 @@
-- [x] show video title,  and views/likes for scraped video below video thumbnail nail
-- [x] improve spinner buttons with progress of everything that's happening while they waiting, make it interactive. add progress bars were necessary
-- [x] LLm to also highlight top 3 comment s with the most likes.
-- [x] link license file in readme file
-- [x] when "scrutinize comments for trending video" button is clicked", he menus must be collapsed by default 
-- [x] Add steps to readme on how to create .secrets.toml inside .streamlit directory
-- [x] Save comments as JSon
-- [ ] Pass all comments to Gemini Exp (gemini-1.5-pro-exp-0801) for indepth analysi. Here's the code snippet on how to implement it (Refer to gemini_implement.py)
-- [x] Add instructions to the readme on how to install the required packages. 
-- [x] Be able to take both links. for example: "https://youtu.be/DHMMbnCSW-I?si=7W95Lcq2Qjt4Gw7K" and "https://www.youtube.com/watch?v=DHMMbnCSW-I&ab_channel=ThePoorMansPodcastReacts" point to the same video
-- [x] Convert the to_do.md to a checklist and tick off the things we've completed 
-- [x] Video information for trending video must appear below video
-- [ ] Remove numbering from the checklist in to_do.md file
-- [x] "Scrutinize comments for trending video" must just e "Scrutinize Comments"
+- [ ] Pass all comments to Gemini Exp (gemini-1.5-pro-exp-0801) for in-depth analysis. Here's the code snippet on how to implement it (Refer to gemini_implement.py)
+- [ ] Implement enhanced comment analysis using the large context window to analyze entire comment threads together
+- [ ] Add comparative analysis feature to compare comments across multiple videos or an entire channel
+- [ ] Generate comprehensive video summaries based on video content and comments
+- [ ] Implement advanced topic modeling and trend detection in comments
+- [ ] Add user behavior analysis to identify influencers and create user profiles
+- [ ] Incorporate multi-modal analysis by analyzing video thumbnails, titles, and descriptions along with comments
+- [ ] Implement predictive analytics for video performance based on early comment patterns
+- [ ] Create dynamic, interactive time-based visualizations for sentiment and engagement evolution
+- [ ] Perform deeper linguistic analysis to identify cultural references and community-specific language
+- [ ] Add customizable insights feature allowing users to define custom metrics
+- [ ] Provide historical context for trending videos or popular creators
+- [ ] Offer content moderation insights by identifying problematic comments or patterns
+- [ ] Implement audience segmentation based on commenting behavior and preferences
+- [ ] Extend analysis to include related discussions on other platforms (cross-platform analysis)
+- [ ] Add natural language querying feature for complex questions about the comments
