@@ -1,6 +1,6 @@
-# YouTube Comment AI Scrutinizer
+# YouTube Comment Analyzer Powered by Gemini AI
 
-This Streamlit app leverages the power of Google's Gemini AI Flash model to analyze YouTube comments and provide insightful data visualizations.
+This Streamlit app leverages the power of Google's Gemini AI to analyze YouTube comments and provide insightful data visualizations and summaries.
 
 ## [**Check Out The Demo Here**](https://youtube-comment-ai-scrutinizer.streamlit.app/)
 
@@ -25,16 +25,13 @@ This Streamlit app leverages the power of Google's Gemini AI Flash model to anal
 
 ## Features
 
-- **Scrape YouTube Comments:** Extract comments from any YouTube video URL.
-- **Sentiment Analysis:** Analyze the sentiment of comments (Positive, Negative, Neutral).
-- **Word Cloud:** Visualize the most frequent words in the comments.
-- **Comment Length Analysis:** Analyze the distribution of comment lengths.
-- **Top Commenters:** Identify the users with the most comments or likes.
-- **Sentiment Analysis Over Time:** Track sentiment trends over time.
-- **Interactive Data Table:** Explore the comments in an interactive table.
-- **User Engagement Score:** Calculate a score based on likes, replies, and sentiment.
-- **Comment Summary:** Summarize the comments using Gemini AI.
-- **Trending Videos:** Explore trending videos and analyze their comments.
+This application utilizes the advanced capabilities of Google's Gemini AI to provide a comprehensive analysis of YouTube comments. Key features include:
+
+- **Gemini-Powered Comment Summarization:**  Leveraging Gemini's large context window, the app generates concise and insightful summaries of all comments and replies, capturing the essence of the discussion.
+- **Sentiment Analysis:**  Gemini helps analyze the sentiment of comments, providing a clear understanding of the overall emotional tone of the audience.
+- **In-Depth Analysis:**  Using the Gemini Pro Exp model, the app delves deeper into comment threads, identifying key themes, topics, and patterns.
+- **Comparative Analysis:**  Compare and contrast comments across multiple videos, revealing differences in audience sentiment and discussion points.
+- **Video Summary Generation:**  Gemini combines video transcripts and comments to create comprehensive summaries, offering a holistic view of the video's content and audience reception.
 
 ## Requirements
 
@@ -49,6 +46,8 @@ This Streamlit app leverages the power of Google's Gemini AI Flash model to anal
 - st_aggrid
 - google-api-python-client
 - google-generativeai
+- youtube-transcript-api
+- emoji
 
 ## Installation
 
@@ -74,7 +73,22 @@ This Streamlit app leverages the power of Google's Gemini AI Flash model to anal
    ```
 
 2. Enter a YouTube video URL in the text input field.
-3. Click the "Scrutanize" button to scrape and analyze the comments.
+3. Click the "Scrutinize" button to analyze the comments using Gemini AI.
+
+## Creative Name Suggestions
+
+Here are 10 creative names that emphasize the Gemini AI integration:
+
+1. **Gemini Insights for YouTube**
+2. **YouTube Comment Navigator with Gemini**
+3. **Gemini-Powered YouTube Comment Analyzer**
+4. **CommentScope: Powered by Gemini AI**
+5. **YouTube Comment Explorer with Gemini**
+6. **Gemini Decoder for YouTube Comments**
+7. **CommentLens: A Gemini AI Perspective**
+8. **YouTube Comment Summarizer with Gemini**
+9. **Gemini-Enhanced YouTube Comment Analysis**
+10. **CommentAI: Powered by Gemini**
 
 ## Contributing
 
