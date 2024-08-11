@@ -372,7 +372,13 @@ def summarize_community_consensus(comments, topic):
 
 # Streamlit App
 st.set_page_config(page_title="CommentScope: Powered by Gemini AI", page_icon="🔬") # Set page title and favicon
-st.title("🔬 CommentScope: Powered by Gemini AI")  # Add emoji to the title
+
+# --- Modified Title Section ---
+st.markdown("""
+    <h1 style="font-size:36px;">🔬 CommentScope</h1>
+    <h2 style="font-size:18px;">Powered by Gemini AI</h2>
+""", unsafe_allow_html=True)
+# --- End of Modified Title Section ---
 
 # Initialize session state
 if 'df' not in st.session_state:
