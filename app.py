@@ -421,3 +421,12 @@ if trending_videos:
                     st.write(response.text.strip())
                 except Exception as e:
                     st.error(f"Error summarizing comments: {e}")
+
+# Collapse menus after clicking "Scrutinize Comments for Trending Video"
+if st.session_state.get("scrape_trending_comments_button_clicked"):
+    st.session_state["scrape_trending_comments_button_clicked"] = False
+    st.experimental_rerun()
+
+# Set session state variable when button is clicked
+if st.button("Scrutinize Comments for Trending Video", key="scrape_trending_comments_button"):
+    st.session_state["scrape_trending_comments_button_clicked"] = True
