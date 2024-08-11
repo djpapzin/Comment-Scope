@@ -11,4 +11,4 @@
 - [x] 11. Convert the to_do.md to a checklist and tick off the things we've completed 
 - [x] Video information for trending video must appear below video
 - [ ] Remove numbering from the checklist in to_do.md file
-- [x] "Scrutinize comments for trending video" must just e "Scrutinize Comments"
+- [ ] "Scrutinize comments for trending video" must just e "Scrutinize"
