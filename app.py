@@ -357,7 +357,8 @@ def generate_video_summary(video_id, comments):
         return "Error generating video summary."
 
 # Streamlit App
-st.title("Youtube Comment AI Scrutinizer")
+st.set_page_config(page_title="Youtube Comment AI Scrutinizer 🔬", page_icon="🔬") # Set page title and favicon
+st.title("Youtube Comment AI Scrutinizer 🔬")  # Add emoji to the title
 
 # Initialize session state
 if 'df' not in st.session_state:
@@ -399,7 +400,14 @@ if st.button("Scrutinize", key="scrape_comments_button"):
                 # Comments Summary
                 with st.expander("Comments Summary", expanded=True):
                     try:
-                        st.write(summarize_comments(df["Comment"].tolist()))
+                        summary = summarize_comments(df["Comment"].tolist())
+                        sentiment = analyze_sentiment(summary)  # Analyze sentiment of the summary
+                        emoji_for_sentiment = emoji.emojize(
+                            ":thumbs_up:" if sentiment == "Positive"
+                            else ":thumbs_down:" if sentiment == "Negative"
+                            else ":neutral_face:"
+                        )
+                        st.write(f"{emoji_for_sentiment} {summary}")  # Add emoji to the summary
                     except Exception as e:
                         st.error(f"Error summarizing comments: {e}")
 
