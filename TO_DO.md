@@ -13,3 +13,5 @@
 - [ ] Turn all the groups into side navigation tabs 
 - [ ] Powered by Gemini AI must be in itylics
 - [ ] scrutinize comments button for trending videos is not working
+- [ ] comparative analysis must be an advanced feature
+- [ ] 
