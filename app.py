@@ -15,6 +15,8 @@ from st_aggrid.grid_options_builder import GridOptionsBuilder
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold  # Import necessary types
 import uuid  # Import uuid module
+from youtube_transcript_api import YouTubeTranscriptApi  # For transcript retrieval
+import emoji  # For emoji support
 
 # Load API key from Streamlit secrets
 gemini_api_key = st.secrets["general"]["GEMINI_API_KEY"]
@@ -127,7 +129,7 @@ def scrape_youtube_comments(youtube_api_key, video_id):
                 break
 
             page_count += 1
-            progress_bar.progress(min(page_count / 10, 1.0), text="Scrutinizing comments...")
+            progress_bar.progress(min(page_count / 10, 1.0), text=f"Scrutinizing comments... (Page {page_count})")  # More detailed progress update
 
         df = pd.DataFrame(comments, columns=["Name", "Comment", "Likes", "Time", "Reply Count", "Sentiment"])
         df['Time'] = pd.to_datetime(df['Time'], utc=True)
@@ -316,13 +318,22 @@ def generate_video_summary(video_id, comments):
     title = video_details["title"]
     description = video_details["description"]
 
+    # Get transcript
+    try:
+        transcript = YouTubeTranscriptApi.get_transcript(video_id)
+        transcript_text = " ".join([entry['text'] for entry in transcript])
+    except Exception as e:
+        logging.error(f"Error fetching transcript: {e}")
+        transcript_text = "Transcript not available."
+
     all_comments = "\n\n".join(comments)
 
     prompt = f"""
-    Generate a comprehensive summary of the YouTube video with the following title and description:
+    Generate a comprehensive summary of the YouTube video with the following title, description, and transcript:
 
     Title: {title}
     Description: {description}
+    Transcript: {transcript_text}
 
     Consider the following comments from viewers:
 
@@ -493,7 +504,7 @@ if trending_videos:
     
     # Generate a unique key using uuid
     unique_key = str(uuid.uuid4())
-    if st.button("Scrutinize Comments", key=f"scrape_trending_comments_button_{unique_key}"):
+    if st.button("Scrutinize", key=f"scrape_trending_comments_button_{unique_key}"):  # Changed button label
         video_id = selected_video['videoId']
         with st.spinner("Scrutinizing comments..."):
             progress_bar = st.progress(0, text="Scrutinizing comments...")
