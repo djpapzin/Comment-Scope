@@ -10,3 +10,4 @@ google-api-python-client
 google-generativeai
 youtube-transcript-api
 emoji
+scikit-learn  # Added for cosine similarity

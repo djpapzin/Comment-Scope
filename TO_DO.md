@@ -4,14 +4,4 @@
 - [ ] Develop a "Controversy Meter" that highlights if there are significant disagreements or debates in the comments
 - [ ] Implement a "Quick Pulse" feature that provides a 2-3 sentence summary of the overall comment sentiment and main topics - **This is already implemented as the "Comments Summary" feature.**
 - [ ] Develop a "Controversy Meter" that highlights if there are significant disagreements or debates in the comments
-- [ ] Add "Chat with comments" feature using doc_search_embeddings.txt
-- [ ] **Add "Chat with comments" feature using doc_search_embeddings.txt**: Explore the possibility of using embeddings to allow users to ask questions about the comments and receive relevant answers.
-- [ ] **Enhance "Quick Pulse"**: Make the summary more engaging and user-friendly. Consider using emojis to represent sentiment visually. - **Consider enhancing the existing "Comments Summary" feature instead.**
-- [x] Change streamlit name to "CommentScope: Powered by Gemini AI"
-- [ ] Implement a comment filtering system using safety settings, users must be able to have a n option to filter harmful/unwanted bu by default,all comments are shown. 
-- [x] The emoji must appear before the title
-- [ ] Turn all the groups into side navigation tabs 
-- [ ] Powered by Gemini AI must be in itylics
-- [ ] scrutinize comments button for trending videos is not working
-- [ ] comparative analysis must be an advanced feature
-- [ ] 
+- [x] **Add "Chat with comments" feature using doc_search_embeddings.txt

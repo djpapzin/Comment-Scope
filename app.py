@@ -17,6 +17,8 @@ from google.generativeai.types import HarmCategory, HarmBlockThreshold  # Import
 import uuid  # Import uuid module
 from youtube_transcript_api import YouTubeTranscriptApi  # For transcript retrieval
 import emoji  # For emoji support
+from sklearn.metrics.pairwise import cosine_similarity  # For cosine similarity calculation
+import numpy as np  # For numerical operations
 
 # Load API key from Streamlit secrets
 gemini_api_key = st.secrets["general"]["GEMINI_API_KEY"]
@@ -370,6 +372,55 @@ def summarize_community_consensus(comments, topic):
 
 # --- End of New Functions ---
 
+# --- Function for Chat with Comments ---
+def chat_with_comments(df, question):
+    # Generate embeddings for each comment
+    comment_embeddings = []
+    for comment in df["Comment"]:
+        embedding = genai.embed_content(
+            model="models/embedding-001",
+            content=comment,
+            task_type="RETRIEVAL_DOCUMENT"
+        )
+        comment_embeddings.append(embedding["embedding"])
+
+    # Generate embedding for the question
+    question_embedding = genai.embed_content(
+        model="models/embedding-001",
+        content=question,
+        task_type="RETRIEVAL_QUERY"
+    )["embedding"]
+
+    # Calculate cosine similarity
+    similarities = cosine_similarity(np.array(question_embedding).reshape(1, -1), np.array(comment_embeddings))
+
+    # Get the index of the most similar comment
+    most_similar_index = np.argmax(similarities)
+
+    # Get the most similar comment
+    most_similar_comment = df["Comment"].iloc[most_similar_index]
+
+    # Use Gemini Pro Exp to generate an answer
+    prompt = f"""
+    You are a helpful AI assistant. Answer the question based on the context provided.
+
+    Context:
+    {most_similar_comment}
+
+    Question:
+    {question}
+
+    Answer:
+    """
+    try:
+        response = gemini_pro_exp_chat_session.send_message(prompt)
+        return response.text.strip()
+    except Exception as e:
+        logging.error(f"Error in chat_with_comments: {e}")
+        return "Error answering your question. Please try again later."
+
+# --- End of Chat with Comments Function ---
+
 # Streamlit App
 st.set_page_config(page_title="CommentScope: Powered by Gemini AI", page_icon="🔬") # Set page title and favicon
 
@@ -506,6 +557,15 @@ if st.button("Scrutinize Comments"):
                     else:
                         st.write("No controversial topics identified.")
 
+                # --- Chat with Comments ---
+                with st.expander("Chat with Comments", expanded=False):
+                    user_question = st.text_input("Ask a question about the comments:")
+                    if st.button("Ask"):
+                        if user_question:
+                            with st.spinner("Thinking..."):
+                                answer = chat_with_comments(df, user_question)
+                                st.write(answer)
+
 # --- Comparative Analysis ---
 st.header("Comparative Analysis")
 video_urls = st.text_area("Enter YouTube video URLs (one per line)")
@@ -625,3 +685,12 @@ if trending_videos:
                 with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
                     summary = generate_video_summary(video_id, df["Comment"].tolist())
                     st.write(summary)
+
+                # --- Chat with Comments ---
+                with st.expander("Chat with Comments", expanded=False):
+                    user_question = st.text_input("Ask a question about the comments:")
+                    if st.button("Ask"):
+                        if user_question:
+                            with st.spinner("Thinking..."):
+                                answer = chat_with_comments(df, user_question)
+                                st.write(answer)
