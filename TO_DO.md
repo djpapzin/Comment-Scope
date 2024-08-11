@@ -5,3 +5,7 @@
 - [ ] Implement a "Quick Pulse" feature that provides a 2-3 sentence summary of the overall comment sentiment and main topics - **This is already implemented as the "Comments Summary" feature.**
 - [ ] Develop a "Controversy Meter" that highlights if there are significant disagreements or debates in the comments
 - [x] **Add "Chat with comments" feature using doc_search_embeddings.txt
+- [ ] Turn all the groups into side navigation tabs 
+- [ ] Powered by Gemini AI must be in itylics
+- [ ] scrutinize comments button for trending videos is not working
+- [ ] comparative analysis must be an advanced feature
