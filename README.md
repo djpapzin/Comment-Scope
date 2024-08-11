@@ -1,4 +1,4 @@
-# YouTube Comment Analyzer Powered by Gemini AI
+# CommentScope: Powered by Gemini AI
 
 This Streamlit app leverages the power of Google's Gemini AI to analyze YouTube comments and provide insightful data visualizations and summaries.
 
@@ -74,21 +74,6 @@ This application utilizes the advanced capabilities of Google's Gemini AI to pro
 
 2. Enter a YouTube video URL in the text input field.
 3. Click the "Scrutinize" button to analyze the comments using Gemini AI.
-
-## Creative Name Suggestions
-
-Here are 10 creative names that emphasize the Gemini AI integration:
-
-1. **Gemini Insights for YouTube**
-2. **YouTube Comment Navigator with Gemini**
-3. **Gemini-Powered YouTube Comment Analyzer**
-4. **CommentScope: Powered by Gemini AI**
-5. **YouTube Comment Explorer with Gemini**
-6. **Gemini Decoder for YouTube Comments**
-7. **CommentLens: A Gemini AI Perspective**
-8. **YouTube Comment Summarizer with Gemini**
-9. **Gemini-Enhanced YouTube Comment Analysis**
-10. **CommentAI: Powered by Gemini**
 
 ## Contributing
 
