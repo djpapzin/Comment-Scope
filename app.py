@@ -77,7 +77,7 @@ def scrape_youtube_comments(youtube_api_key, video_id):
     try:
         next_page_token = None
         page_count = 0
-        progress_bar = st.progress(0)
+        progress_bar = st.progress(0, text="Scraping comments...")
         while True:
             request = youtube.commentThreads().list(
                 part="snippet,replies",
@@ -116,7 +116,7 @@ def scrape_youtube_comments(youtube_api_key, video_id):
                 break
 
             page_count += 1
-            progress_bar.progress(min(page_count / 10, 1.0))
+            progress_bar.progress(min(page_count / 10, 1.0), text="Scraping comments...")
 
         df = pd.DataFrame(comments, columns=["Name", "Comment", "Likes", "Time", "Reply Count", "Sentiment"])
         df['Time'] = pd.to_datetime(df['Time'], utc=True)
@@ -184,7 +184,14 @@ def display_interactive_table(df):
     gb.configure_pagination(paginationAutoPageSize=True)
     gb.configure_side_bar()
     gridOptions = gb.build()
-    AgGrid(df, gridOptions=gridOptions, enable_enterprise_modules=True, update_mode=GridUpdateMode.SELECTION_CHANGED, data_return_mode=DataReturnMode.FILTERED_AND_SORTED)
+    grid_response = AgGrid(
+        df,
+        gridOptions=gridOptions,
+        enable_enterprise_modules=True,
+        update_mode=GridUpdateMode.SELECTION_CHANGED,
+        data_return_mode=DataReturnMode.FILTERED_AND_SORTED
+    )
+    return grid_response
 
 # Function to get trending videos
 def get_trending_videos(youtube_api_key):
@@ -231,6 +238,11 @@ def summarize_comments(comments):
         logging.error(f"Error summarizing comments: {e}")
         return "Error summarizing comments."
 
+# Function to get top comments by likes
+def get_top_comments_by_likes(df, top_n=3):
+    top_comments = df.nlargest(top_n, "Likes")
+    return top_comments[["Name", "Comment", "Likes"]]
+
 # Streamlit App
 st.title("Youtube Comment AI Scrutinizer")
 
@@ -243,23 +255,34 @@ if 'filtered_df' not in st.session_state:
 video_url = st.text_input("Enter YouTube video URL")
 
 # Scrape Comments Button
-if st.button("Scrutanize", key="scrape_comments_button"): # Change here
+if st.button("Scrutinize", key="scrape_comments_button"):
     video_id = extract_video_id(video_url)
     if video_id:
-        with st.spinner("Scrutinizing comments..."): # Change here
-            progress_bar = st.progress(0)
+        with st.spinner("Scrutinizing comments..."):
+            progress_bar = st.progress(0, text="Scraping comments...")
             df, total_comments = scrape_youtube_comments(youtube_api_key, video_id)
-            progress_bar.progress(1)
+            progress_bar.progress(1.0, text="Scraping comments...")
             if df is None or total_comments is None:
                 st.error("Error scraping comments. Please try again.")
             else:
-                st.success(f"Scrutinizing Complete! Total Comments: {total_comments}") # Change here
+                st.success(f"Scrutinizing Complete! Total Comments: {total_comments}")
                 st.session_state['df'] = df.copy()
                 st.session_state['filtered_df'] = df.copy()
+
+                # Get video details
+                youtube = build('youtube', 'v3', developerKey=youtube_api_key, cache_discovery=False)
+                request = youtube.videos().list(part="snippet,statistics", id=video_id)
+                response = request.execute()
+                video_details = response["items"][0]
+
+                # Display video thumbnail and details
                 st.image(f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg")
+                st.write(f"**Title:** {video_details['snippet']['title']}")
+                st.write(f"**Views:** {video_details['statistics']['viewCount']}")
+                st.write(f"**Likes:** {video_details['statistics']['likeCount']}")
 
                 # Comments Summary
-                with st.expander("Comments Summary", expanded=True): # Change here
+                with st.expander("Comments Summary", expanded=True):
                     try:
                         st.write(summarize_comments(df["Comment"].tolist()))
                     except Exception as e:
@@ -297,7 +320,12 @@ if st.button("Scrutanize", key="scrape_comments_button"): # Change here
                     if top_commenters_by_likes:
                         get_top_commenters(df, by="likes", top_n=top_n)
 
-                    st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
+                    if top_commenters_by_likes_sorted:
+                        st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
+
+                # Top Comments by Likes
+                with st.expander("Top Comments by Likes", expanded=False):
+                    st.write(get_top_comments_by_likes(df))
 
                 # Sentiment Analysis Over Time
                 with st.expander("Sentiment Analysis Over Time", expanded=False):
@@ -305,7 +333,8 @@ if st.button("Scrutanize", key="scrape_comments_button"): # Change here
 
                 # Interactive Data Table
                 with st.expander("Interactive Comment Table", expanded=False):
-                    display_interactive_table(df)
+                    grid_response = display_interactive_table(df)
+                    st.session_state['filtered_df'] = grid_response['data']
                     json = st.session_state['filtered_df'].to_json(orient='records')
                     st.download_button(label="Download JSON", data=json, file_name="youtube_comments.json", mime="application/json")
 
@@ -326,9 +355,9 @@ if trending_videos:
     if st.button("Scrutinize Comments for Trending Video", key="scrape_trending_comments_button"):
         video_id = selected_video['videoId']
         with st.spinner("Scraping comments..."):
-            progress_bar = st.progress(0)
+            progress_bar = st.progress(0, text="Scraping comments...")
             df, total_comments = scrape_youtube_comments(youtube_api_key, video_id)
-            progress_bar.progress(1)
+            progress_bar.progress(1.0, text="Scraping comments...")
             if df is None or total_comments is None:
                 st.error("Error scraping comments. Please try again.")
             else:
@@ -366,6 +395,10 @@ if trending_videos:
 
                     if top_commenters_by_likes:
                         get_top_commenters(df, by="likes", top_n=top_n)
+
+                # Top Comments by Likes
+                with st.expander("Top Comments by Likes", expanded=False):
+                    st.write(get_top_comments_by_likes(df))
 
                 # Sentiment Analysis Over Time
                 st.subheader("Sentiment Analysis Over Time")

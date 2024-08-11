@@ -1,12 +1,11 @@
-1. show video title,  and views/likes for scraped video below video thumbnail nail
-2. improve spinner buttons with progress of everything that's happening while they waiting, make it interactive. add progress bars were necessary
-3. LLm to also highlight top 3 comment s with the most likes.
-4. link license file in readme file
-5.  when "scrutinize comments for trending video" button is clicked", he menus must be collapsed by default 
-6.  Add steps to readme on how to create .secrets.toml inside .streamlit directory
-7. Save comments as JSon
-8. Pass all comments to Gemini Exp (gemini-1.5-pro-exp-0801) for indepth analysis
-9. Add instructions to the readme on how to install the required packages. 
-10. Be able to take both links. for example: "https://youtu.be/DHMMbnCSW-I?si=7W95Lcq2Qjt4Gw7K" and "https://www.youtube.com/watch?v=DHMMbnCSW-I&ab_channel=ThePoorMansPodcastReacts" point to the same video
-11. Convert the to_do.md to a checklist and tick off the things we've completed 
-12. On the readme, step 2 of installation, please specify teh code to automate the creation of teh fodler and t file
+- [x] 1. show video title,  and views/likes for scraped video below video thumbnail nail
+- [x] 2. improve spinner buttons with progress of everything that's happening while they waiting, make it interactive. add progress bars were necessary
+- [x] 3. LLm to also highlight top 3 comment s with the most likes.
+- [x] 4. link license file in readme file
+- [ ] 5.  when "scrutinize comments for trending video" button is clicked", he menus must be collapsed by default 
+- [x] 6.  Add steps to readme on how to create .secrets.toml inside .streamlit directory
+- [x] 7. Save comments as JSon
+- [ ] 8. Pass all comments to Gemini Exp (gemini-1.5-pro-exp-0801) for indepth analysis
+- [x] 9. Add instructions to the readme on how to install the required packages. 
+- [ ] 10. Be able to take both links. for example: "https://youtu.be/DHMMbnCSW-I?si=7W95Lcq2Qjt4Gw7K" and "https://www.youtube.com/watch?v=DHMMbnCSW-I&ab_channel=ThePoorMansPodcastReacts" point to the same video
+- [x] 11. Convert the to_do.md to a checklist and tick off the things we've completed 

@@ -57,7 +57,7 @@ This Streamlit app leverages the power of Google's Gemini AI Flash model to anal
    pip install -r requirements.txt
    ```
 
-2. Create a `secrets.toml` file in the same directory as `app.py` and add your API keys:
+2. Create a `secrets.toml` file in the `.streamlit` directory and add your API keys:
    ```toml
    [general]
    GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
@@ -82,7 +82,7 @@ Contributions are welcome! Please open an issue or submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgements
 
