@@ -29,9 +29,13 @@ This application utilizes the advanced capabilities of Google's Gemini AI to pro
 
 - **Gemini-Powered Comment Summarization:**  Leveraging Gemini's large context window, the app generates concise and insightful summaries of all comments and replies, capturing the essence of the discussion.
 - **Sentiment Analysis:**  Gemini helps analyze the sentiment of comments, providing a clear understanding of the overall emotional tone of the audience.
-- **In-Depth Analysis:**  Using the Gemini Pro Exp model, the app delves deeper into comment threads, identifying key themes, topics, and patterns.
-- **Comparative Analysis:**  Compare and contrast comments across multiple videos, revealing differences in audience sentiment and discussion points.
-- **Video Summary Generation:**  Gemini combines video transcripts and comments to create comprehensive summaries, offering a holistic view of the video's content and audience reception.
+- **In-Depth Analysis (Gemini Pro Exp):**  Using the Gemini Pro Exp model, the app delves deeper into comment threads, identifying key themes, topics, and patterns.
+- **Comparative Analysis (Gemini Pro Exp):**  Compare and contrast comments across multiple videos, revealing differences in audience sentiment and discussion points.
+- **Video Summary Generation (Gemini Pro Exp):**  Gemini combines video transcripts and comments to create comprehensive summaries, offering a holistic view of the video's content and audience reception.
+- **Interactive Data Table:** Explore comments in detail with an interactive table, allowing sorting, filtering, and downloading.
+- **User Engagement Score:**  Measure audience engagement based on likes, replies, and sentiment.
+- **Trending Videos Analysis:** Analyze comments on currently trending YouTube videos.
+- **Visualizations:**  Gain insights through various visualizations, including sentiment analysis charts, word clouds, and comment length distributions.
 
 ## Requirements
 
