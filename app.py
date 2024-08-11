@@ -298,6 +298,45 @@ def comparative_analysis(dfs, video_ids):
         logging.error(f"Error performing comparative analysis: {e}")
         return "Error performing comparative analysis."
 
+# Function to generate video summary
+def generate_video_summary(video_id, comments):
+    youtube = build('youtube', 'v3', developerKey=youtube_api_key, cache_discovery=False)
+    request = youtube.videos().list(part="snippet", id=video_id)
+    response = request.execute()
+    video_details = response["items"][0]["snippet"]
+
+    title = video_details["title"]
+    description = video_details["description"]
+
+    all_comments = "\n\n".join(comments)
+
+    prompt = f"""
+    Generate a comprehensive summary of the YouTube video with the following title and description:
+
+    Title: {title}
+    Description: {description}
+
+    Consider the following comments from viewers:
+
+    {all_comments}
+
+    The summary should include:
+
+    * Key topics covered in the video
+    * Main points discussed
+    * Overall sentiment of the viewers based on the comments
+    * Any interesting patterns or insights from the comments
+
+    Please provide a concise and informative summary.
+    """
+
+    try:
+        response = gemini_pro_exp_chat_session.send_message(prompt)
+        return response.text.strip()
+    except Exception as e:
+        logging.error(f"Error generating video summary: {e}")
+        return "Error generating video summary."
+
 # Streamlit App
 st.title("Youtube Comment AI Scrutinizer")
 
@@ -403,6 +442,11 @@ if st.button("Scrutinize", key="scrape_comments_button"):
                 # In-Depth Analysis with Gemini Pro Exp
                 with st.expander("In-Depth Analysis (Gemini Pro Exp)", expanded=False):
                     st.write(in_depth_analysis(df["Comment"].tolist()))
+
+                # Video Summary
+                with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
+                    summary = generate_video_summary(video_id, df["Comment"].tolist())
+                    st.write(summary)
 
 # --- Comparative Analysis ---
 st.header("Comparative Analysis")
@@ -512,6 +556,11 @@ if trending_videos:
                 # In-Depth Analysis with Gemini Pro Exp
                 with st.expander("In-Depth Analysis (Gemini Pro Exp)", expanded=False):
                     st.write(in_depth_analysis(df["Comment"].tolist()))
+
+                # Video Summary
+                with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
+                    summary = generate_video_summary(video_id, df["Comment"].tolist())
+                    st.write(summary)
 
 # Collapse menus after clicking "Scrutinize Comments"
 if st.session_state.get("scrape_trending_comments_button_clicked"):
