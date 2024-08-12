@@ -638,36 +638,31 @@ if trending_videos:
     # Display video metadata below the thumbnail
     display_video_metadata(selected_video)
     
-    # Generate a unique key using uuid
-    unique_key = str(uuid.uuid4())
-    if st.button("Scrutinize Comments", key=f"scrape_trending_comments_button_{unique_key}"):
+    if st.button("Scrutinize Comments", key=f"scrutinize_comments_{selected_video['videoId']}"):
         video_id = selected_video['videoId']
         with st.spinner("Scrutinizing comments..."):
-            progress_bar = st.progress(0.0, text="Scrutinizing comments...")
-            try:
-                df, total_comments = scrape_youtube_comments(youtube_api_key, video_id)
-                progress_bar.progress(1.0, text="Scrutinizing comments...")
-                if df is None or total_comments is None:
-                    st.error("Error scraping comments. Please try again.")
-                else:
-                    st.success(f"Scraping complete! Total Comments: {total_comments}")
-                    st.session_state['df'] = df.copy()  # Store the DataFrame in session state
-                    st.session_state['filtered_df'] = df.copy()  # Store the DataFrame in session state
-                    # Perform common analysis tasks
-                    analyze_comments(df, video_id)
+            progress_bar = st.progress(0, text="Scrutinizing comments...")
+            df, total_comments = scrape_youtube_comments(youtube_api_key, video_id)
+            progress_bar.progress(1.0, text="Scrutinizing comments...")
+            if df is None or total_comments is None:
+                st.error("Error scraping comments. Please try again.")
+            else:
+                st.success(f"Scraping complete! Total Comments: {total_comments}")
+                st.session_state['df'] = df.copy()  # Add this line to store the DataFrame in session state
+                st.session_state['filtered_df'] = df.copy()  # Add this line to store the DataFrame in session state
+                # Perform common analysis tasks
+                analyze_comments(df, video_id)
 
-                    # Comments Summary
-                    with st.expander("Comments Summary", expanded=True):
-                        try:
-                            summary = summarize_comments(df["Comment"].tolist())
-                            sentiment = analyze_sentiment(summary)  # Analyze sentiment of the summary
-                            emoji_for_sentiment = emoji.emojize(
-                                ":thumbs_up:" if sentiment == "Positive"
-                                else ":thumbs_down:" if sentiment == "Negative"
-                                else ":neutral_face:"
-                            )
-                            st.write(f"{emoji_for_sentiment} {summary}")  # Add emoji to the summary
-                        except Exception as e:
-                            st.error(f"Error summarizing comments: {e}")
-            except Exception as e:
-                st.error(f"An error occurred: {e}")
+                # Comments Summary
+                with st.expander("Comments Summary", expanded=True):
+                    try:
+                        summary = summarize_comments(df["Comment"].tolist())
+                        sentiment = analyze_sentiment(summary)  # Analyze sentiment of the summary
+                        emoji_for_sentiment = emoji.emojize(
+                            ":thumbs_up:" if sentiment == "Positive"
+                            else ":thumbs_down:" if sentiment == "Negative"
+                            else ":neutral_face:"
+                        )
+                        st.write(f"{emoji_for_sentiment} {summary}")  # Add emoji to the summary
+                    except Exception as e:
+                        st.error(f"Error summarizing comments: {e}")
