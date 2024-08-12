@@ -524,6 +524,10 @@ def analyze_comments(df, video_id):
 
     # --- Chat with Comments ---
     with st.expander("Chat with Comments", expanded=False):
+        # Initialize chat history if not present in session state
+        if 'chat_history' not in st.session_state:
+            st.session_state['chat_history'] = []
+
         # Display chat messages from history
         for message in st.session_state.chat_history:
             with st.chat_message(message["role"]):
@@ -562,8 +566,6 @@ if 'df' not in st.session_state:
     st.session_state['df'] = pd.DataFrame()
 if 'filtered_df' not in st.session_state:
     st.session_state['filtered_df'] = pd.DataFrame()
-if 'chat_history' not in st.session_state:
-    st.session_state['chat_history'] = []
 
 # --- Single Video Analysis ---
 st.header("Single Video Analysis")
