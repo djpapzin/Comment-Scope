@@ -30,3 +30,4 @@
   - [ ] In-Depth Analysis : "For a deeper dive, our Gemini Pro Exp model provides an in-depth analysis of comment threads, identifying subtle patterns and insights."
   - [ ] Chat with Comments: "You can even ask questions about the comments, and our AI will provide answers based on its analysis."
 - [ ] Modify readme file to use less requirements, mention the most important ones
+- [ ] Add error handling where necessary
