@@ -31,3 +31,4 @@
   - [ ] Chat with Comments: "You can even ask questions about the comments, and our AI will provide answers based on its analysis."
 - [ ] Modify readme file to use less requirements, mention the most important ones
 - [ ] Add error handling where necessary
+- [ ] Change "Scrutanize" to "Scope", so "Scrutinizig comments" should be "scoping comments" Make is change to all releant files. MOur app must represent  the name": "CommntScope" 
