@@ -17,5 +17,5 @@
 - [ ] Modify top commenters
 - [ ] Add option for users to use own gemini API key in streamlit app incase My API key has rate limits or out of quota
 - [ ] Have option to download comments as CSV and JSON
-- [ ] Remove teh icon in "comment summary" 
+- [ ] Remove thh icon in "comment summary" 
 - [ ] Break down app.py into different modules/functions (refactor it)
