@@ -2,7 +2,7 @@
 
 CommentScope is a cutting-edge Streamlit app that leverages Google's Gemini AI to provide in-depth analysis of YouTube comments. It offers powerful insights and visualizations to help content creators, marketers, and researchers understand their audience better.
 
-## [**Live Demo**](https://youtube-comment-ai-scrutinizer.streamlit.app/)
+## [**Live Demo**](https://commentscope.streamlit.app/)
 
 <table>
   <tr>
