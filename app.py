@@ -736,4 +736,6 @@ if trending_videos:
                             answer = chat_with_comments(df, user_question)
 
                         # Add AI message to chat history
-                        st.session_state.chat
+                        st.session_state.chat_history.append({"role": "ai", "content": answer})
+                        with st.chat_message("ai"):
+                            st.markdown(answer)
