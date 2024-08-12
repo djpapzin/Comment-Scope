@@ -449,6 +449,8 @@ if 'df' not in st.session_state:
     st.session_state['df'] = pd.DataFrame()
 if 'filtered_df' not in st.session_state:
     st.session_state['filtered_df'] = pd.DataFrame()
+if 'chat_history' not in st.session_state:
+    st.session_state['chat_history'] = []
 
 # --- Single Video Analysis ---
 st.header("Single Video Analysis")
@@ -572,12 +574,27 @@ if st.button("Scrutinize Comments"):
 
                 # --- Chat with Comments ---
                 with st.expander("Chat with Comments", expanded=False):
-                    user_question = st.text_input("Ask a question about the comments:")
-                    if st.button("Ask"):
-                        if user_question:
-                            with st.spinner("Thinking..."):
-                                answer = chat_with_comments(df, user_question)
-                                st.write(answer)
+                    # Display chat messages from history
+                    for message in st.session_state.chat_history:
+                        with st.chat_message(message["role"]):
+                            st.markdown(message["content"])
+
+                    # User input
+                    user_question = st.chat_input("Ask a question about the comments:")
+                    if user_question:
+                        # Add user message to chat history
+                        st.session_state.chat_history.append({"role": "user", "content": user_question})
+                        with st.chat_message("user"):
+                            st.markdown(user_question)
+
+                        # Generate response
+                        with st.spinner("Thinking..."):
+                            answer = chat_with_comments(df, user_question)
+
+                        # Add AI message to chat history
+                        st.session_state.chat_history.append({"role": "ai", "content": answer})
+                        with st.chat_message("ai"):
+                            st.markdown(answer)
 
 # --- Comparative Analysis ---
 st.header("Comparative Analysis")
@@ -701,9 +718,22 @@ if trending_videos:
 
                 # --- Chat with Comments ---
                 with st.expander("Chat with Comments", expanded=False):
-                    user_question = st.text_input("Ask a question about the comments:")
-                    if st.button("Ask"):
-                        if user_question:
-                            with st.spinner("Thinking..."):
-                                answer = chat_with_comments(df, user_question)
-                                st.write(answer)
+                    # Display chat messages from history
+                    for message in st.session_state.chat_history:
+                        with st.chat_message(message["role"]):
+                            st.markdown(message["content"])
+
+                    # User input
+                    user_question = st.chat_input("Ask a question about the comments:")
+                    if user_question:
+                        # Add user message to chat history
+                        st.session_state.chat_history.append({"role": "user", "content": user_question})
+                        with st.chat_message("user"):
+                            st.markdown(user_question)
+
+                        # Generate response
+                        with st.spinner("Thinking..."):
+                            answer = chat_with_comments(df, user_question)
+
+                        # Add AI message to chat history
+                        st.session_state.chat
