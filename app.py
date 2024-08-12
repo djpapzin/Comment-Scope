@@ -30,8 +30,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # Configure Gemini
 genai.configure(api_key=gemini_api_key)
 
-# --- Start of Gemini Integration ---
-
 # Create the model
 generation_config = {
     "temperature": 0.7,
@@ -326,50 +324,52 @@ def comparative_analysis(dfs, video_ids):
 
 # Function to generate video summary
 def generate_video_summary(youtube_api_key, video_id, comments):
-    youtube = build('youtube', 'v3', developerKey=youtube_api_key, cache_discovery=False)
-    request = youtube.videos().list(part="snippet", id=video_id)
-    response = request.execute()
-    video_details = response["items"][0]["snippet"]
-
-    title = video_details["title"]
-    description = video_details["description"]
-
-    # Get transcript
     try:
-        transcript = YouTubeTranscriptApi.get_transcript(video_id)
-        transcript_text = " ".join([entry['text'] for entry in transcript])
-    except Exception as e:
-        logging.error(f"Error fetching transcript: {e}")
-        transcript_text = "Transcript not available."
+        youtube = build('youtube', 'v3', developerKey=youtube_api_key, cache_discovery=False)
+        request = youtube.videos().list(part="snippet", id=video_id)
+        response = request.execute()
+        video_details = response["items"][0]["snippet"]
 
-    all_comments = "\n\n".join(comments)
+        title = video_details["title"]
+        description = video_details["description"]
 
-    prompt = f"""
-    Generate a comprehensive summary of the YouTube video with the following title, description, and transcript:
+        # Get transcript
+        try:
+            transcript = YouTubeTranscriptApi.get_transcript(video_id)
+            transcript_text = " ".join([entry['text'] for entry in transcript])
+        except Exception as e:
+            logging.error(f"Error fetching transcript: {e}")
+            transcript_text = "Transcript not available."
 
-    Title: {title}
-    Description: {description}
-    Transcript: {transcript_text}
+        all_comments = "\n\n".join(comments)
 
-    Consider the following comments from viewers:
+        prompt = f"""
+        Generate a comprehensive summary of the YouTube video with the following title, description, and transcript:
 
-    {all_comments}
+        Title: {title}
+        Description: {description}
+        Transcript: {transcript_text}
 
-    The summary should include:
+        Consider the following comments from viewers:
 
-    * Key topics covered in the video
-    * Main points discussed
-    * Overall sentiment of the viewers based on the comments
-    * Any interesting patterns or insights from the comments
+        {all_comments}
 
-    Please provide a concise and informative summary.
-    """
+        The summary should include:
 
-    try:
+        * Key topics covered in the video
+        * Main points discussed
+        * Overall sentiment of the viewers based on the comments
+        * Any interesting patterns or insights from the comments
+
+        Please provide a concise and informative summary.
+        """
+
         response = gemini_pro_exp_chat_session.send_message(prompt)
         return response.text.strip()
+
     except Exception as e:
         logging.error(f"Error generating video summary: {e}")
+        st.error(f"Error generating video summary: {e}")  # Display the error to the user
         return "Error generating video summary."
 
 # --- New Functions for Community Consensus ---
