@@ -1,8 +1,8 @@
 # CommentScope: Powered by Gemini AI
 
-This Streamlit app leverages the power of Google's Gemini AI to analyze YouTube comments and provide insightful data visualizations and summaries.
+CommentScope is a cutting-edge Streamlit app that leverages Google's Gemini AI to provide in-depth analysis of YouTube comments. It offers powerful insights and visualizations to help content creators, marketers, and researchers understand their audience better.
 
-## [**Check Out The Demo Here**](https://youtube-comment-ai-scrutinizer.streamlit.app/)
+## [**Live Demo**](https://youtube-comment-ai-scrutinizer.streamlit.app/)
 
 <table>
   <tr>
@@ -13,29 +13,27 @@ This Streamlit app leverages the power of Google's Gemini AI to analyze YouTube 
   <tr>
     <td><img src="demo_images/comment_length_analysis.jpeg" alt="Comment Length Demo"></td>
     <td><img src="demo_images/user_engagement_score.jpeg" alt="User Engagement Demo"></td>
-    <td><img src="demo_images/sentiment_overtime.jpeg" alt="Sentiment Overtime Demo"></td
+    <td><img src="demo_images/sentiment_overtime.jpeg" alt="Sentiment Overtime Demo"></td>
   </tr>
   <tr>
     <td><img src="demo_images/comments_summary.jpeg" alt="Comments Summary Demo"></td>
     <td><img src="demo_images/top_commenters.jpeg" alt="Top Commenters Demo"></td>
     <td><img src="demo_images/collapsed_menu.jpeg" alt="Collapsed Menu Demo"></td>
-
   </tr>
 </table>
 
 ## Features
 
-This application utilizes the advanced capabilities of Google's Gemini AI to provide a comprehensive analysis of YouTube comments. Key features include:
-
-- **Gemini-Powered Comment Summarization:**  Leveraging Gemini's large context window, the app generates concise and insightful summaries of all comments and replies, capturing the essence of the discussion.
-- **Sentiment Analysis:**  Gemini helps analyze the sentiment of comments, providing a clear understanding of the overall emotional tone of the audience.
-- **In-Depth Analysis (Gemini Pro Exp):**  Using the Gemini Pro Exp model, the app delves deeper into comment threads, identifying key themes, topics, and patterns.
-- **Comparative Analysis (Gemini Pro Exp):**  Compare and contrast comments across multiple videos, revealing differences in audience sentiment and discussion points.
-- **Video Summary Generation (Gemini Pro Exp):**  Gemini combines video transcripts and comments to create comprehensive summaries, offering a holistic view of the video's content and audience reception.
-- **Interactive Data Table:** Explore comments in detail with an interactive table, allowing sorting, filtering, and downloading.
-- **User Engagement Score:**  Measure audience engagement based on likes, replies, and sentiment.
+- **Gemini-Powered Comment Summarization:** Generate concise and insightful summaries of all comments and replies.
+- **Sentiment Analysis:** Analyze the emotional tone of comments using advanced AI techniques.
+- **In-Depth Analysis:** Identify key themes, topics, and patterns in comment threads using Gemini Pro Exp.
+- **Comparative Analysis:** Compare comments across multiple videos to reveal differences in audience sentiment and discussion points.
+- **Video Summary Generation:** Create comprehensive summaries combining video transcripts and comments.
+- **Interactive Data Table:** Explore, sort, filter, and download comment data.
+- **User Engagement Score:** Measure audience engagement based on likes, replies, and sentiment.
 - **Trending Videos Analysis:** Analyze comments on currently trending YouTube videos.
-- **Visualizations:**  Gain insights through various visualizations, including sentiment analysis charts, word clouds, and comment length distributions.
+- **Visualizations:** Gain insights through sentiment analysis charts, word clouds, and comment length distributions.
+- **Chat with Comments:** Ask questions about the comments and receive AI-generated answers.
 
 ## Requirements
 
@@ -52,36 +50,46 @@ This application utilizes the advanced capabilities of Google's Gemini AI to pro
 - google-generativeai
 - youtube-transcript-api
 - emoji
+- scikit-learn
 
 ## Installation
 
-1. Install the required packages:
-   ```bash
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/commentscope.git
+   cd commentscope
+   ```
+
+2. Install the required packages:
+   ```
    pip install -r requirements.txt
    ```
 
-2. Create a `secrets.toml` file in the `.streamlit` directory and add your API keys:
-   ```toml
-   [general]
-   GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
-   YOUTUBE_API_KEY = "YOUR_YOUTUBE_API_KEY"
-   ```
-
-   **Note:** You can obtain a Gemini API key from [https://generativeai.google.com/](https://generativeai.google.com/) and a YouTube API key from [https://console.developers.google.com/](https://console.developers.google.com/).
+3. Set up your API keys:
+   - Create a `.streamlit/secrets.toml` file
+   - Add your API keys:
+     ```toml
+     [general]
+     GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
+     YOUTUBE_API_KEY = "YOUR_YOUTUBE_API_KEY"
+     ```
 
 ## Usage
 
-1. Run the app:
-   ```bash
+1. Run the Streamlit app:
+   ```
    streamlit run app.py
    ```
 
-2. Enter a YouTube video URL in the text input field.
-3. Click the "Scrutinize" button to analyze the comments using Gemini AI.
+2. Open your web browser and navigate to the provided local URL (usually `http://localhost:8501`).
+
+3. Enter a YouTube video URL or select a trending video to analyze.
+
+4. Explore the various analysis features and visualizations provided by CommentScope.
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request.
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to submit pull requests, report issues, or request features.
 
 ## License
 
@@ -92,8 +100,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 - Google Gemini AI
 - YouTube Data API
 - Streamlit
-- st_aggrid
+- All other open-source libraries used in this project
 
 ## Disclaimer
 
-This app is for educational and research purposes only. It is not intended for commercial use or to violate any terms of service. Please use this app responsibly and ethically.
+This app is for educational and research purposes only. It is not intended for commercial use or to violate any terms of service. Please use responsibly and ethically.
