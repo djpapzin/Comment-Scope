@@ -5,3 +5,4 @@ config.data
 .venv/
 sentiment_analysis.png
 .vscode/
+Docs/
