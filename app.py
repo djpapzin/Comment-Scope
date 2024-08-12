@@ -78,6 +78,10 @@ safety_settings = [
 
 # --- End of Gemini Integration ---
 
+def serve_landing_page():
+    with open(os.path.join("static", "index.html"), "r") as f:
+        return f.read()
+
 # Function to extract video ID from YouTube URL
 def extract_video_id(url):
     patterns = [
@@ -573,6 +577,9 @@ if 'df' not in st.session_state:
 if 'filtered_df' not in st.session_state:
     st.session_state['filtered_df'] = pd.DataFrame()
 
+if st.button("Return to Landing Page"):
+    st.markdown(serve_landing_page(), unsafe_allow_html=True)
+    
 # --- Single Video Analysis ---
 st.header("Single Video Analysis")
 video_url = st.text_input("Enter YouTube video URL")
