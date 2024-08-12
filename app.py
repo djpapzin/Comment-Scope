@@ -69,6 +69,13 @@ gemini_pro_exp_model = genai.GenerativeModel(
 )
 
 gemini_pro_exp_chat_session = gemini_pro_exp_model.start_chat()
+
+safety_settings = [
+            {"category": HarmCategory.HARM_CATEGORY_HATE_SPEECH, "threshold": HarmBlockThreshold.BLOCK_NONE},
+            {"category": HarmCategory.HARM_CATEGORY_HARASSMENT, "threshold": HarmBlockThreshold.BLOCK_NONE},
+            {"category": HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, "threshold": HarmBlockThreshold.BLOCK_NONE},
+            {"category": HarmCategory.HARM_CATEGORY_DANGEROUS, "threshold": HarmBlockThreshold.BLOCK_NONE},
+        ]
 # --- End of Gemini Pro Exp Initialization ---
 
 # --- End of Gemini Integration ---
@@ -258,10 +265,7 @@ def summarize_comments(comments):
     prompt = f"Summarize the following YouTube comments:\n\n{all_comments}"
     try:
         # Adjusted safety settings
-        response = chat_session.send_message(prompt, safety_settings=[
-            {"category": HarmCategory.HARM_CATEGORY_HATE_SPEECH, "threshold": HarmBlockThreshold.BLOCK_NONE},
-            {"category": HarmCategory.HARM_CATEGORY_HARASSMENT, "threshold": HarmBlockThreshold.BLOCK_NONE},
-        ])
+        response = chat_session.send_message(prompt, safety_settings=safety_settings)
         return response.text.strip()
     except Exception as e:
         logging.error(f"Error summarizing comments: {e}")
