@@ -35,22 +35,15 @@ CommentScope is a cutting-edge Streamlit app that leverages Google's Gemini AI t
 - **Visualizations:** Gain insights through sentiment analysis charts, word clouds, and comment length distributions.
 - **Chat with Comments:** Ask questions about the comments and receive AI-generated answers.
 
-## Requirements
+## Key Requirements
 
-- Python 3.7+
-- Streamlit
-- pandas
-- matplotlib
-- seaborn
-- textblob
-- wordcloud
-- plotly
-- st_aggrid
-- google-api-python-client
-- google-generativeai
-- youtube-transcript-api
-- emoji
-- scikit-learn
+- **Python 3.7+:** The foundation for the application.
+- **Streamlit:**  For building the interactive web app.
+- **google-generativeai:** To interact with Google's Gemini AI.
+- **youtube-transcript-api:** For fetching YouTube video transcripts.
+- **google-api-python-client:** For accessing the YouTube Data API.
+
+**Note:** A complete list of requirements is available in the `requirements.txt` file.
 
 ## Installation
 
