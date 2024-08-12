@@ -435,6 +435,108 @@ def chat_with_comments(df, question):
 
 # --- End of Chat with Comments Function ---
 
+# --- Function to perform common analysis tasks ---
+def analyze_comments(df, video_id):
+    # Sentiment Analysis Visualization
+    with st.expander("Sentiment Analysis", expanded=False):
+        sentiment_counts = df['Sentiment'].value_counts()
+        fig, ax = plt.subplots()
+        ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=140)
+        ax.axis('equal')
+        st.pyplot(fig)
+        export_visualization(fig, "sentiment_analysis.png")
+
+    # Generate Word Cloud
+    with st.expander("Word Cloud", expanded=False):
+        all_comments = ' '.join(df['Comment'])
+        generate_word_cloud(all_comments)
+
+    # Comment Length Analysis
+    with st.expander("Comment Length Analysis", expanded=False):
+        analyze_comment_length(df)
+
+    # Top Commenters
+    with st.expander("Top Commenters", expanded=False):
+        st.subheader("Top Commenters")
+        top_commenters_by_comments = st.checkbox("Top Commenters by Number of Comments")
+        top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
+        top_commenters_by_likes_sorted = st.checkbox("Comments Sorted by Likes")
+        top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
+
+        if top_commenters_by_comments:
+            get_top_commenters(df, by="comments", top_n=top_n)
+
+        if top_commenters_by_likes:
+            get_top_commenters(df, by="likes", top_n=top_n)
+
+        if top_commenters_by_likes_sorted:
+            st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
+
+    # Top Comments by Likes
+    with st.expander("Top Comments by Likes", expanded=False):
+        st.write(get_top_comments_by_likes(df))
+
+    # Sentiment Analysis Over Time
+    with st.expander("Sentiment Analysis Over Time", expanded=False):
+        analyze_sentiment_over_time(df)
+
+    # Interactive Data Table
+    with st.expander("Interactive Comment Table", expanded=False):
+        grid_response = display_interactive_table(df)
+        st.session_state['filtered_df'] = grid_response['data']
+        json = st.session_state['filtered_df'].to_json(orient='records')
+        st.download_button(label="Download JSON", data=json, file_name="youtube_comments.json", mime="application/json")
+
+    # User Engagement Score
+    with st.expander("User Engagement Score", expanded=False):
+        df = calculate_engagement(df)
+        st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
+
+    # In-Depth Analysis with Gemini Pro Exp
+    with st.expander("In-Depth Analysis (Gemini Pro Exp)", expanded=False):
+        st.write(in_depth_analysis(df["Comment"].tolist()))
+
+    # Video Summary
+    with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
+        summary = generate_video_summary(video_id, df["Comment"].tolist())
+        st.write(summary)
+
+    # --- Community Consensus ---
+    with st.expander("Community Consensus", expanded=False):
+        controversial_topics = identify_controversial_topics(df["Comment"].tolist())
+        if controversial_topics:
+            for topic in controversial_topics:
+                st.write(f"**Topic:** {topic}")
+                consensus = summarize_community_consensus(df["Comment"].tolist(), topic)
+                st.write(consensus)
+        else:
+            st.write("No controversial topics identified.")
+
+    # --- Chat with Comments ---
+    with st.expander("Chat with Comments", expanded=False):
+        # Display chat messages from history
+        for message in st.session_state.chat_history:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+        # User input
+        user_question = st.chat_input("Ask a question about the comments:")
+        if user_question:
+            # Add user message to chat history
+            st.session_state.chat_history.append({"role": "user", "content": user_question})
+            with st.chat_message("user"):
+                st.markdown(user_question)
+
+            # Generate response
+            with st.spinner("Thinking..."):
+                answer = chat_with_comments(df, user_question)
+
+            # Add AI message to chat history
+            st.session_state.chat_history.append({"role": "ai", "content": answer})
+            with st.chat_message("ai"):
+                st.markdown(answer)
+# --- End of Common Analysis Function ---
+
 # Streamlit App
 st.set_page_config(page_title="CommentScope: Powered by Gemini AI", page_icon="🔬") # Set page title and favicon
 
@@ -498,104 +600,8 @@ if st.button("Scrutinize Comments"):
                     except Exception as e:
                         st.error(f"Error summarizing comments: {e}")
 
-                # Sentiment Analysis Visualization
-                with st.expander("Sentiment Analysis", expanded=False):
-                    sentiment_counts = df['Sentiment'].value_counts()
-                    fig, ax = plt.subplots()
-                    ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=140)
-                    ax.axis('equal')
-                    st.pyplot(fig)
-                    export_visualization(fig, "sentiment_analysis.png")
-
-                # Generate Word Cloud
-                with st.expander("Word Cloud", expanded=False):
-                    all_comments = ' '.join(df['Comment'])
-                    generate_word_cloud(all_comments)
-
-                # Comment Length Analysis
-                with st.expander("Comment Length Analysis", expanded=False):
-                    analyze_comment_length(df)
-
-                # Top Commenters
-                with st.expander("Top Commenters", expanded=False):
-                    st.subheader("Top Commenters")
-                    top_commenters_by_comments = st.checkbox("Top Commenters by Number of Comments")
-                    top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
-                    top_commenters_by_likes_sorted = st.checkbox("Comments Sorted by Likes")
-                    top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
-
-                    if top_commenters_by_comments:
-                        get_top_commenters(df, by="comments", top_n=top_n)
-
-                    if top_commenters_by_likes:
-                        get_top_commenters(df, by="likes", top_n=top_n)
-
-                    if top_commenters_by_likes_sorted:
-                        st.write(df[["Name", "Comment", "Likes"]].sort_values(by="Likes", ascending=False))
-
-                # Top Comments by Likes
-                with st.expander("Top Comments by Likes", expanded=False):
-                    st.write(get_top_comments_by_likes(df))
-
-                # Sentiment Analysis Over Time
-                with st.expander("Sentiment Analysis Over Time", expanded=False):
-                    analyze_sentiment_over_time(df)
-
-                # Interactive Data Table
-                with st.expander("Interactive Comment Table", expanded=False):
-                    grid_response = display_interactive_table(df)
-                    st.session_state['filtered_df'] = grid_response['data']
-                    json = st.session_state['filtered_df'].to_json(orient='records')
-                    st.download_button(label="Download JSON", data=json, file_name="youtube_comments.json", mime="application/json")
-
-                # User Engagement Score
-                with st.expander("User Engagement Score", expanded=False):
-                    df = calculate_engagement(df)
-                    st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
-
-                # In-Depth Analysis with Gemini Pro Exp
-                with st.expander("In-Depth Analysis (Gemini Pro Exp)", expanded=False):
-                    st.write(in_depth_analysis(df["Comment"].tolist()))
-
-                # Video Summary
-                with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
-                    summary = generate_video_summary(video_id, df["Comment"].tolist())
-                    st.write(summary)
-
-                # --- Community Consensus ---
-                with st.expander("Community Consensus", expanded=False):
-                    controversial_topics = identify_controversial_topics(df["Comment"].tolist())
-                    if controversial_topics:
-                        for topic in controversial_topics:
-                            st.write(f"**Topic:** {topic}")
-                            consensus = summarize_community_consensus(df["Comment"].tolist(), topic)
-                            st.write(consensus)
-                    else:
-                        st.write("No controversial topics identified.")
-
-                # --- Chat with Comments ---
-                with st.expander("Chat with Comments", expanded=False):
-                    # Display chat messages from history
-                    for message in st.session_state.chat_history:
-                        with st.chat_message(message["role"]):
-                            st.markdown(message["content"])
-
-                    # User input
-                    user_question = st.chat_input("Ask a question about the comments:")
-                    if user_question:
-                        # Add user message to chat history
-                        st.session_state.chat_history.append({"role": "user", "content": user_question})
-                        with st.chat_message("user"):
-                            st.markdown(user_question)
-
-                        # Generate response
-                        with st.spinner("Thinking..."):
-                            answer = chat_with_comments(df, user_question)
-
-                        # Add AI message to chat history
-                        st.session_state.chat_history.append({"role": "ai", "content": answer})
-                        with st.chat_message("ai"):
-                            st.markdown(answer)
+                # Perform common analysis tasks
+                analyze_comments(df, video_id)
 
 # --- Comparative Analysis ---
 st.header("Comparative Analysis")
@@ -644,99 +650,19 @@ if trending_videos:
                 st.error("Error scraping comments. Please try again.")
             else:
                 st.success(f"Scraping complete! Total Comments: {total_comments}")
-                st.write(df)
-                csv = df.to_csv(index=False).encode('utf-8')
-                st.download_button(label="Download CSV", data=csv, file_name="youtube_comments.csv", mime="text/csv")
-
-                # Sentiment Analysis Visualization
-                st.subheader("Sentiment Analysis")
-                sentiment_counts = df['Sentiment'].value_counts()
-                fig, ax = plt.subplots()
-                ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=140)
-                ax.axis('equal')
-                st.pyplot(fig)
-                export_visualization(fig, "sentiment_analysis.png")
-
-                # Generate Word Cloud
-                st.subheader("Word Cloud")
-                all_comments = ' '.join(df['Comment'])
-                generate_word_cloud(all_comments)
-
-                # Comment Length Analysis
-                st.subheader("Comment Length Analysis")
-                analyze_comment_length(df)
-
-                # Top Commenters
-                with st.expander("Top Commenters", expanded=False):
-                    top_commenters_by_comments = st.checkbox("Top Commenters by Number of Comments")
-                    top_commenters_by_likes = st.checkbox("Top Commenters by Total Likes")
-                    top_n = st.number_input("Number of Top Commenters", min_value=1, value=10, step=1)
-
-                    if top_commenters_by_comments:
-                        get_top_commenters(df, by="comments", top_n=top_n)
-
-                    if top_commenters_by_likes:
-                        get_top_commenters(df, by="likes", top_n=top_n)
-
-                # Top Comments by Likes
-                with st.expander("Top Comments by Likes", expanded=False):
-                    st.write(get_top_comments_by_likes(df))
-
-                # Sentiment Analysis Over Time
-                st.subheader("Sentiment Analysis Over Time")
-                analyze_sentiment_over_time(df)
-
-                # Interactive Data Table
-                st.subheader("Interactive Comment Table")
-                display_interactive_table(df)
-
-                # User Engagement Score
-                st.subheader("User Engagement Score")
-                df = calculate_engagement(df)
-                st.write(df[["Name", "Comment", "EngagementScore"]].sort_values(by="EngagementScore", ascending=False))
+                # Perform common analysis tasks
+                analyze_comments(df, video_id)
 
                 # Comments Summary
-                st.subheader("Comments Summary")
-                prompt = f"Summarize the following YouTube comments in a neutral and unbiased manner, providing an overview of the video's content and the discussion in the comments section. Please include the main topics, key points, and any notable trends or insights, without taking a stance or making assumptions. The comments are as follows:\n\n{df['Comment'].tolist()}\n\nPlease format the summary in bullet points."
-                try:
-                    # Updated safety settings
-                    response = chat_session.send_message(prompt, safety_settings=[
-                        {"category": HarmCategory.HARM_CATEGORY_HATE_SPEECH, "threshold": HarmBlockThreshold.BLOCK_NONE},
-                        {"category": HarmCategory.HARM_CATEGORY_HARASSMENT, "threshold": HarmBlockThreshold.BLOCK_NONE},
-                    ])
-                    st.write(response.text.strip())
-                except Exception as e:
-                    st.error(f"Error summarizing comments: {e}")
-
-                # In-Depth Analysis with Gemini Pro Exp
-                with st.expander("In-Depth Analysis (Gemini Pro Exp)", expanded=False):
-                    st.write(in_depth_analysis(df["Comment"].tolist()))
-
-                # Video Summary
-                with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
-                    summary = generate_video_summary(video_id, df["Comment"].tolist())
-                    st.write(summary)
-
-                # --- Chat with Comments ---
-                with st.expander("Chat with Comments", expanded=False):
-                    # Display chat messages from history
-                    for message in st.session_state.chat_history:
-                        with st.chat_message(message["role"]):
-                            st.markdown(message["content"])
-
-                    # User input
-                    user_question = st.chat_input("Ask a question about the comments:")
-                    if user_question:
-                        # Add user message to chat history
-                        st.session_state.chat_history.append({"role": "user", "content": user_question})
-                        with st.chat_message("user"):
-                            st.markdown(user_question)
-
-                        # Generate response
-                        with st.spinner("Thinking..."):
-                            answer = chat_with_comments(df, user_question)
-
-                        # Add AI message to chat history
-                        st.session_state.chat_history.append({"role": "ai", "content": answer})
-                        with st.chat_message("ai"):
-                            st.markdown(answer)
+                with st.expander("Comments Summary", expanded=True):
+                    try:
+                        summary = summarize_comments(df["Comment"].tolist())
+                        sentiment = analyze_sentiment(summary)  # Analyze sentiment of the summary
+                        emoji_for_sentiment = emoji.emojize(
+                            ":thumbs_up:" if sentiment == "Positive"
+                            else ":thumbs_down:" if sentiment == "Negative"
+                            else ":neutral_face:"
+                        )
+                        st.write(f"{emoji_for_sentiment} {summary}")  # Add emoji to the summary
+                    except Exception as e:
+                        st.error(f"Error summarizing comments: {e}")
