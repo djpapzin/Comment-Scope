@@ -4,3 +4,4 @@ config.data
 .aider*
 .venv/
 sentiment_analysis.png
+.vscode/
