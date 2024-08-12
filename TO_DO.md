@@ -10,7 +10,12 @@
 - [ ] "Powered by Gemini AI" must be in italics
 - [ ] scrutinize comments button for trending videos is not working
 - [ ] comparative analysis must be an advanced feature
-- [ ] Remove interactive table
+- [ ] Reorder interactive table to show Name, comment, Likes, reply count, sentiment, date
 - [ ] get reply from LLM as JSON, i want each topic to have a summary from the llm
 - [ ] indepth analysis must come after the summary
 - [ ] Pass the video as input to the gemini model, it can process videos
+- [ ] Modify top commenters
+- [ ] Add option for users to use own gemini API key in streamlit app incase My API key has rate limits or out of quota
+- [ ] Have option to download comments as CSV and JSON
+- [ ] Remove teh icon in "comment summary" 
+- [ ] Break down app.py into different modules/functions (refactor it)
