@@ -115,12 +115,24 @@ def scrape_youtube_comments(youtube_api_key, video_id):
 
             for item in response["items"]:
                 comment = item["snippet"]["topLevelComment"]["snippet"]
-                comments.append(comment["textDisplay"])
+                comments.append({
+                    "Comment": comment["textDisplay"],
+                    "Likes": comment["likeCount"],
+                    "Name": comment["authorDisplayName"],
+                    "Time": comment["publishedAt"],
+                    "Reply Count": comment.get("totalReplyCount", 0)  # Add Reply Count
+                })
 
                 if "replies" in item:
                     for reply in item["replies"]["comments"]:
                         reply_comment = reply["snippet"]
-                        comments.append(reply_comment["textDisplay"])
+                        comments.append({
+                            "Comment": reply_comment["textDisplay"],
+                            "Likes": reply_comment["likeCount"],
+                            "Name": reply_comment["authorDisplayName"],
+                            "Time": reply_comment["publishedAt"],
+                            "Reply Count": 0  # Replies don't have replies
+                        })
 
             if "nextPageToken" in response:
                 next_page_token = response["nextPageToken"]
@@ -130,7 +142,7 @@ def scrape_youtube_comments(youtube_api_key, video_id):
             page_count += 1
             progress_bar.progress(min(page_count / 10, 1.0), text=f"Scrutinizing comments... (Page {page_count})")  # More detailed progress update
 
-        df = pd.DataFrame(comments, columns=["Comment"])
+        df = pd.DataFrame(comments)
         df["Sentiment"] = df["Comment"].apply(analyze_sentiment)  # Add this line to perform sentiment analysis
         total_comments = len(comments)
         return df, total_comments
@@ -244,10 +256,10 @@ def summarize_comments(comments):
     all_comments = "\n\n".join(comments)
     prompt = f"Summarize the following YouTube comments:\n\n{all_comments}"
     try:
-        # Updated safety settings
+        # Adjusted safety settings
         response = chat_session.send_message(prompt, safety_settings=[
-            {"category": HarmCategory.HARM_CATEGORY_HATE_SPEECH, "threshold": HarmBlockThreshold.BLOCK_LOW_AND_ABOVE},
-            {"category": HarmCategory.HARM_CATEGORY_HARASSMENT, "threshold": HarmBlockThreshold.BLOCK_LOW_AND_ABOVE},
+            {"category": HarmCategory.HARM_CATEGORY_HATE_SPEECH, "threshold": HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE},
+            {"category": HarmCategory.HARM_CATEGORY_HARASSMENT, "threshold": HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE},
         ])
         return response.text.strip()
     except Exception as e:
@@ -671,8 +683,8 @@ if trending_videos:
                 try:
                     # Updated safety settings
                     response = chat_session.send_message(prompt, safety_settings=[
-                        {"category": HarmCategory.HARM_CATEGORY_HATE_SPEECH, "threshold": HarmBlockThreshold.BLOCK_LOW_AND_ABOVE},
-                        {"category": HarmCategory.HARM_CATEGORY_HARASSMENT, "threshold": HarmBlockThreshold.BLOCK_LOW_AND_ABOVE},
+                        {"category": HarmCategory.HARM_CATEGORY_HATE_SPEECH, "threshold": HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE},
+                        {"category": HarmCategory.HARM_CATEGORY_HARASSMENT, "threshold": HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE},
                     ])
                     st.write(response.text.strip())
                 except Exception as e:
