@@ -5,6 +5,7 @@
 - [ ] Implement a "Quick Pulse" feature that provides a 2-3 sentence summary of the overall comment sentiment and main topics - **This is already implemented as the "Comments Summary" feature.**
 - [ ] Develop a "Controversy Meter" that highlights if there are significant disagreements or debates in the comments
 - [ ] **Add "Chat with comments" feature using doc_search_embeddings.txt
+  - [ ] When I chat and press enter, nothing happens, it reloads the page instead, lets's fix that.
   - [ ] use streamlit chat function
 - [ ] Turn all the groups into side navigation tabs 
 - [ ] "Powered by Gemini AI" must be in italics
@@ -19,3 +20,4 @@
 - [ ] Have option to download comments as CSV and JSON
 - [ ] Remove thh icon in "comment summary" 
 - [ ] Break down app.py into different modules/functions (refactor it)
+- [ ] Add "i" (information icon) for each of the topics when a mouse hovers over it.
