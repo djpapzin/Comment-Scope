@@ -388,6 +388,8 @@ def summarize_community_consensus(comments, topic):
 
 # --- Function for Chat with Comments ---
 def chat_with_comments(df, question):
+    logging.info("Starting chat_with_comments function")
+    
     # Generate embeddings for each comment
     comment_embeddings = []
     for comment in df["Comment"]:
@@ -397,6 +399,8 @@ def chat_with_comments(df, question):
             task_type="RETRIEVAL_DOCUMENT"
         )
         comment_embeddings.append(embedding["embedding"])
+    
+    logging.info("Generated embeddings for comments")
 
     # Generate embedding for the question
     question_embedding = genai.embed_content(
@@ -404,9 +408,13 @@ def chat_with_comments(df, question):
         content=question,
         task_type="RETRIEVAL_QUERY"
     )["embedding"]
+    
+    logging.info("Generated embedding for the question")
 
     # Calculate cosine similarity
     similarities = cosine_similarity(np.array(question_embedding).reshape(1, -1), np.array(comment_embeddings))
+    
+    logging.info("Calculated cosine similarity")
 
     # Get the index of the most similar comment
     most_similar_index = np.argmax(similarities)
@@ -428,10 +436,12 @@ def chat_with_comments(df, question):
     """
     try:
         response = gemini_pro_exp_chat_session.send_message(prompt)
+        logging.info("Received response from Gemini Pro Exp model")
         return response.text.strip()
     except Exception as e:
         logging.error(f"Error in chat_with_comments: {e}")
         return "Error answering your question. Please try again later."
+
 
 # --- End of Chat with Comments Function ---
 
