@@ -650,6 +650,8 @@ if trending_videos:
                 st.error("Error scraping comments. Please try again.")
             else:
                 st.success(f"Scraping complete! Total Comments: {total_comments}")
+                st.session_state['df'] = df.copy()  # Add this line to store the DataFrame in session state
+                st.session_state['filtered_df'] = df.copy()  # Add this line to store the DataFrame in session state
                 # Perform common analysis tasks
                 analyze_comments(df, video_id)
 
