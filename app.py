@@ -325,7 +325,7 @@ def comparative_analysis(dfs, video_ids):
         return "Error performing comparative analysis."
 
 # Function to generate video summary
-def generate_video_summary(video_id, comments):
+def generate_video_summary(youtube_api_key, video_id, comments):
     youtube = build('youtube', 'v3', developerKey=youtube_api_key, cache_discovery=False)
     request = youtube.videos().list(part="snippet", id=video_id)
     response = request.execute()
@@ -512,7 +512,7 @@ def analyze_comments(df, video_id):
 
     # Video Summary
     with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
-        summary = generate_video_summary(video_id, df["Comment"].tolist())
+        summary = generate_video_summary(youtube_api_key, video_id, df["Comment"].tolist())
         st.write(summary)
 
     # --- Community Consensus ---
