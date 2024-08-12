@@ -131,6 +131,7 @@ def scrape_youtube_comments(youtube_api_key, video_id):
             progress_bar.progress(min(page_count / 10, 1.0), text=f"Scrutinizing comments... (Page {page_count})")  # More detailed progress update
 
         df = pd.DataFrame(comments, columns=["Comment"])
+        df["Sentiment"] = df["Comment"].apply(analyze_sentiment)  # Add this line to perform sentiment analysis
         total_comments = len(comments)
         return df, total_comments
 
