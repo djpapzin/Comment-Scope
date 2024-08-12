@@ -34,3 +34,4 @@
 - [ ] Change "Scrutanize" to "Scope", so "Scrutinizig comments" should be "scoping comments" Make is change to all releant files. MOur app must represent  the name": "CommntScope" 
 - [ ] Move Coment summary for trending videos to appear first similar to trending videos.
 - [ ] Add description of the project to streamlit app. 
+- [ ] Make index.hml default landing page
