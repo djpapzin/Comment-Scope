@@ -4,8 +4,13 @@
 - [ ] Develop a "Controversy Meter" that highlights if there are significant disagreements or debates in the comments
 - [ ] Implement a "Quick Pulse" feature that provides a 2-3 sentence summary of the overall comment sentiment and main topics - **This is already implemented as the "Comments Summary" feature.**
 - [ ] Develop a "Controversy Meter" that highlights if there are significant disagreements or debates in the comments
-- [x] **Add "Chat with comments" feature using doc_search_embeddings.txt
+- [ ] **Add "Chat with comments" feature using doc_search_embeddings.txt
+  - [ ] use streamlit chat function
 - [ ] Turn all the groups into side navigation tabs 
 - [ ] "Powered by Gemini AI" must be in italics
 - [ ] scrutinize comments button for trending videos is not working
 - [ ] comparative analysis must be an advanced feature
+- [ ] Remove interactive table
+- [ ] get reply from LLM as JSON, i want each topic to have a summary from the llm
+- [ ] indepth analysis must come after the summary
+- [ ] Pass the video as input to the gemini model, it can process videos
