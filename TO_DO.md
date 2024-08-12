@@ -21,3 +21,12 @@
 - [ ] Remove thh icon in "comment summary" 
 - [ ] Break down app.py into different modules/functions (refactor it)
 - [ ] Add "i" (information icon) for each of the topics when a mouse hovers over it.
+  - [ ] Comments Summary: "Here's an AI-generated summary of all comments. Notice how it captures the main topics and overall sentiment."
+  - [ ] Sentiment Analysis: "This pie chart shows the breakdown of positive, negative, and neutral comments. It's a quick way to gauge audience reaction."
+  - [ ] Word Cloud: "The word cloud visually represents the most common words in the comments. It's great for identifying trending topics."
+  - [ ] Comment Length Analysis: "This histogram shows the distribution of comment lengths. It helps us understand how engaged viewers are."
+  - [ ] Top Commenters: "We can quickly identify the most active commenters or those whose comments get the most likes."
+  - [ ] Sentiment Over Time: "This graph shows how sentiment changed over time since the video was posted. It's useful for tracking audience reaction trends."
+  - [ ] In-Depth Analysis : "For a deeper dive, our Gemini Pro Exp model provides an in-depth analysis of comment threads, identifying subtle patterns and insights."
+  - [ ] Chat with Comments: "You can even ask questions about the comments, and our AI will provide answers based on its analysis."
+- [ ] 
