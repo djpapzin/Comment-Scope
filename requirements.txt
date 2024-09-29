@@ -11,3 +11,5 @@ google-generativeai
 youtube-transcript-api
 emoji
 scikit-learn
+elevenlabs
+st-copy-to-clipboard

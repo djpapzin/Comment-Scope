@@ -10,6 +10,7 @@ from textblob import TextBlob
 from wordcloud import WordCloud
 import plotly.express as px
 import streamlit as st
+from st_copy_to_clipboard import st_copy_to_clipboard
 from st_aggrid import AgGrid, GridUpdateMode, DataReturnMode
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 import google.generativeai as genai
@@ -19,6 +20,7 @@ from youtube_transcript_api import YouTubeTranscriptApi  # For transcript retrie
 import emoji  # For emoji support
 from sklearn.metrics.pairwise import cosine_similarity  # For cosine similarity calculation
 import numpy as np  # For numerical operations
+from googleapiclient.errors import HttpError
 
 # Load API key from Streamlit secrets
 gemini_api_key = st.secrets["general"]["GEMINI_API_KEY"]
@@ -84,7 +86,8 @@ def extract_video_id(url):
         r"(?<=v=)[^&]+",
         r"(?<=be\/)[^?]+",
         r"(?<=embed\/)[^\"?]+",
-        r"(?<=youtu.be\/)[^\"?]+"
+        r"(?<=youtu.be\/)[^\"?]+",
+        r"(?<=youtube.com/live/)[^?]+"
     ]
     for pattern in patterns:
         video_id = re.search(pattern, url)
@@ -449,6 +452,25 @@ def chat_with_comments(df, question, video_id=None):  # Add video_id parameter
 
 # --- End of Chat with Comments Function ---
 
+def generate_in_depth_analysis(comments):
+    """Generates in-depth analysis using Gemini Pro Exp."""
+
+    prompt = f"""
+    Please provide an in-depth analysis of the following YouTube comments:
+
+    {comments}
+
+    Your analysis should include:
+    * Key themes and topics discussed in the comments
+    * Sentiment analysis of the comments (overall sentiment and distribution)
+    * Identification of any controversial or polarizing topics
+    * Insights into the audience's opinions and perspectives
+    * Any other relevant observations or insights
+    """
+
+    response = gemini_pro_exp_chat_session.send_message(prompt)
+    return response.text
+
 # --- Function to perform common analysis tasks ---
 def analyze_comments(df, video_id):
     # Sentiment Analysis Visualization
@@ -508,7 +530,15 @@ def analyze_comments(df, video_id):
 
     # In-Depth Analysis with Gemini Pro Exp
     with st.expander("In-Depth Analysis (Gemini Pro Exp)", expanded=False):
-        st.write(in_depth_analysis(df["Comment"].tolist()))
+        try:
+            in_depth_analysis = generate_in_depth_analysis(df["Comment"].tolist())
+            st.write(in_depth_analysis)
+
+            # Add copy button
+            st_copy_to_clipboard(in_depth_analysis, key="in_depth_analysis_copy_button")
+
+        except Exception as e:
+            st.error(f"Error generating in-depth analysis: {e}")
 
     # Video Summary
     with st.expander("Video Summary (Gemini Pro Exp)", expanded=False):
@@ -557,6 +587,76 @@ def analyze_comments(df, video_id):
                 st.markdown(answer)
 # --- End of Common Analysis Function ---
 
+def scrape_live_chat_messages(youtube_api_key, live_chat_id):
+    """Scrapes live chat messages from a YouTube live stream."""
+
+    youtube = build('youtube', 'v3', developerKey=youtube_api_key, cache_discovery=False)
+    messages = []
+
+    try:
+        next_page_token = None
+        while True:
+            request = youtube.liveChatMessages().list(
+                liveChatId=live_chat_id,
+                part="snippet,authorDetails",
+                maxResults=2000,  # Adjust as needed
+                pageToken=next_page_token
+            )
+            response = request.execute()
+
+            for item in response["items"]:
+                snippet = item["snippet"]
+                author_details = item["authorDetails"]
+                messages.append({
+                    "Message": snippet["displayMessage"],
+                    "Author": author_details["displayName"],
+                    "Time": snippet["publishedAt"],
+                    # Add other relevant fields as needed
+                })
+
+            next_page_token = response.get("nextPageToken")
+            if not next_page_token:
+                break
+
+        df = pd.DataFrame(messages)
+        return df
+
+    except HttpError as e:
+        logging.error(f"HTTP error occurred: {e}")
+        st.error(f"HTTP error occurred: {e}")
+        return None
+    except Exception as e:
+        logging.error(f"Error scraping live chat messages: {e}")
+        st.error(f"Error scraping live chat messages: {e}")
+        return None
+
+def get_live_chat_id(youtube_api_key, video_id):
+    """Retrieves the live chat ID for a YouTube live stream."""
+
+    youtube = build('youtube', 'v3', developerKey=youtube_api_key, cache_discovery=False)
+
+    try:
+        request = youtube.videos().list(
+            part="liveStreamingDetails",
+            id=video_id
+        )
+        response = request.execute()
+
+        live_streaming_details = response["items"][0].get("liveStreamingDetails")
+        if live_streaming_details:
+            return live_streaming_details.get("activeLiveChatId")
+        else:
+            return None  # Not a live stream or no active chat
+
+    except HttpError as e:
+        logging.error(f"HTTP error occurred: {e}")
+        st.error(f"HTTP error occurred: {e}")
+        return None
+    except Exception as e:
+        logging.error(f"Error getting live chat ID: {e}")
+        st.error(f"Error getting live chat ID: {e}")
+        return None
+    
 # Streamlit App
 st.set_page_config(page_title="CommentScope: Powered by Gemini AI", page_icon="🔬") # Set page title and favicon
 
@@ -591,6 +691,7 @@ if st.button("Scrutinize Comments"):
                 st.success(f"Scrutinizing Complete! Total Comments: {total_comments}")
                 st.session_state['df'] = df.copy()
                 st.session_state['filtered_df'] = df.copy()
+                st.warning("This video is not a live stream or does not have an active live chat.")
 
                 # Get video details
                 youtube = build('youtube', 'v3', developerKey=youtube_api_key, cache_discovery=False)
@@ -608,13 +709,18 @@ if st.button("Scrutinize Comments"):
                 with st.expander("Comments Summary", expanded=True):
                     try:
                         summary = summarize_comments(df["Comment"].tolist())
-                        sentiment = analyze_sentiment(summary)  # Analyze sentiment of the summary
+                        sentiment = analyze_sentiment(summary)
                         emoji_for_sentiment = emoji.emojize(
                             ":thumbs_up:" if sentiment == "Positive"
                             else ":thumbs_down:" if sentiment == "Negative"
                             else ":neutral_face:"
                         )
-                        st.write(f"{emoji_for_sentiment} {summary}")  # Add emoji to the summary
+                        summary_with_emoji = f"{emoji_for_sentiment} {summary}"
+                        st.write(summary_with_emoji)  # Display the summary with emoji
+
+                        # Add copy button
+                        st_copy_to_clipboard(summary_with_emoji, key="summary_copy_button")
+
                     except Exception as e:
                         st.error(f"Error summarizing comments: {e}")
 
